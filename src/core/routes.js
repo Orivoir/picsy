@@ -38,7 +38,7 @@ const routes = [
         props: {
             action: "show"
         },
-        path: "/album/:name",
+        path: "/album/:id",
         name: "show album"
     },
     {
@@ -58,7 +58,7 @@ const routes = [
         props: {
             action: "filter"
         },
-        path: "/filter/:name",
+        path: "/filter/:id",
         name: "filter album"
     },
     {

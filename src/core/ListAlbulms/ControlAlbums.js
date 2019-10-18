@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import Confirm from './../Confirm/Confirm';
 
 function ControlAlbums({
@@ -9,17 +9,25 @@ function ControlAlbums({
     ,loadRemove
     ,errorRname
     ,album
+    ,focus
+    ,firstRef
 }) {
 
     const [input,setInput] = useState(false);
     const [rname,setRname] = useState("");
     const [confirm,setConfirm] = useState(false);
 
+    useEffect( () => {
+        setTimeout(() => focus ? firstRef.current.focus() : null, 75)
+    } ) ;
+
     return (
         <section>
             <ul>
                 <li>
-                    <button 
+                    <button
+                        onContextMenu={e => e.preventDefault()}
+                        ref={firstRef}
                         type="button"
                         className={`${!input ? '':'hide'}`}
                         onClick={() => setInput(true)}
@@ -34,23 +42,24 @@ function ControlAlbums({
                             onRname( rname );
                         }}
                     >
-                        {
-                            loadRname || (
-                                <input 
-                                    type="text"
-                                    name="rname"
-                                    onChange={e => setRname( e.target.value )}
-                                    autoComplete="off"
-                                    placeholder={album.name}
-                                />
-                            )
-                        }
+
+                        <input 
+                            type="text"
+                            name="rname"
+                            onChange={e => setRname( e.target.value )}
+                            autoComplete="off"
+                            placeholder={album.get('name')}
+                            disabled={!!loadRname}
+                        />
 
                         <button
                             type="button"
                             onClick={() => setInput(false)}
                         >
-                            <i className="fas fa-times"></i>
+                            {
+                                loadRname ||
+                                <i className="fas fa-times"></i>
+                            }
                         </button>
 
                     </form>

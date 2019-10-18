@@ -3,6 +3,7 @@ import Loader from './../../core/Loader/Loader';
 import {Redirect} from 'react-router-dom';
 import User from './../../core/User/User';
 import ListAlbulms from './../../core/ListAlbulms/ListAlbulms';
+import {HashLink as Link} from 'react-router-hash-link';
 
 export default class Dash extends React.Component {
 
@@ -32,7 +33,6 @@ export default class Dash extends React.Component {
                 redirect: <Redirect to="/" /> 
             } ) ;
         } else {
-
             
             this.props.db.getUser( this.userID )
             .then( user => {
@@ -89,8 +89,17 @@ export default class Dash extends React.Component {
                     db={this.props.db}
                     albums={albums} 
                     load={loader.albums}
-                /> 
+                />
 
+                <aside>
+                    <p>
+                        <Link
+                            to="/add-album"
+                        >
+                            <i className="fas fa-folder-plus"></i>
+                        </Link>
+                    </p>
+                </aside>
 
             </section>
         )
