@@ -1,19 +1,24 @@
 import React from 'react';
 import ItemImg from './../ItemImg/ItemImg';
+import './ListImg.css';
 
 function ListImg( {
     items,
-    load
+    load,
+    db
 } ) {
 
     return (
-        <ul>
+        <ul
+            className="ListImg"
+        >
             {
                 load || (
                     items.map( item => (
                         <ItemImg
                             key={item.id}
-                            item={item} 
+                            item={item}
+                            db={db} 
                         />
                     ) )
                 )

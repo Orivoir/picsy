@@ -13,7 +13,7 @@ const getPics = (db,id) => {
             .then( pics => {
                 resolve( pics );
             } )
-            .catch( err => reject() )
+            .catch( err => reject(err) )
         ;
     } ) ;
 }
@@ -35,12 +35,27 @@ function ShowAlbum({db}) {
 
     return (
         <>
+
+            <ListImg
+                items={
+                    !pictures.pics ?
+                    getPics(db,id).then( pics => {
+                        setPictures( {
+                            pics:pics
+                            ,loader:false
+                        } )
+                    } ) : pictures.pics
+                }
+                load={pictures.loader}
+                db={db}
+            />
+
             <FormAdd
                 type="picture"
                 voidForm={voidForm}
                 onSubmit={({name,picture}) => {
                     
-                    if( 
+                    if(
                         name.length <= 42 &&
                         name.length >= 2 &&
                         picture
@@ -53,13 +68,22 @@ function ShowAlbum({db}) {
 
                             if( success ) {
 
-                                setErrors( [ <Notif
-                                    key={Date.now()}
-                                    text="fichier ajouté avec succés"
-                                    type="success"
-                                    onClose={({remove}) => remove()}
-                                /> ] ) ;
+                                // setErrors( [ <Notif
+                                //     key={Date.now()}
+                                //     text="fichier ajouté avec succés"
+                                //     type="success"
+                                //     onClose={({remove}) => remove()}
+                                // /> ] ) ;
                                 setVoidForm( true );
+                                setTimeout(() => {
+                                    setVoidForm( false );
+                                }, 100);
+                                setPictures({
+                                    pics:null,loader:<Loader
+                                    width={64}
+                                    bg="rgba(0,0,0,.9)"
+                                    type="timer"
+                                />})
 
                             } else {
                                 setErrors( [ ...errors , <Notif
@@ -87,19 +111,6 @@ function ShowAlbum({db}) {
                 load={loaderAddPicture}
             />
             {errors.map( error => error )}
-
-            <ListImg
-                items={
-                    !pictures.pics ?
-                    getPics(db,id).then( pics => {
-                        setPictures( {
-                            pics:pics
-                            ,loader:false
-                        } )
-                    } ) : pictures.pics
-                }
-                load={pictures.loader}
-            />
 
         </>
     )

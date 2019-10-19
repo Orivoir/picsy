@@ -1,0 +1,44 @@
+.Confirm p aside {
+
+    display: flex;
+    justify-content: space-around;
+}
+
+
+.Confirm aside button:hover {
+
+    border-color: transparent!important;
+}
+
+.Confirm aside button i {
+
+    display: inline-block;
+    margin-right: .8vh;
+}
+
+.Confirm aside button.cancel {
+
+    background: rgb( 186 , 42 , 31 );
+}
+
+.Confirm p::after {
+
+    content: ' ?';
+}
+
+.Confirm h2 {
+
+    margin: 0;
+}
+
+.Confirm {
+
+    background: rgb( 50,50,50 );
+    color: #fff;
+    padding: .8vh 1.5vh;
+}
+
+.Confirm aside button.confirm {
+
+    background: rgb( 62 , 215 , 71 );
+}

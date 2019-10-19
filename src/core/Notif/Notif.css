@@ -1,0 +1,60 @@
+.Notif {
+    color: #fff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 2vh;
+    font-weight: 650;
+    border-radius: 6px;
+    margin: 1.5vh .75vh;
+}
+
+.Notif button:hover {
+    background: #fff!important;
+}
+
+.Notif button:hover i {
+
+    color: #fff!important;
+}
+
+.Notif p  i {
+
+    margin-right: .85vh;
+}
+
+.Notif p {
+
+    user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    -webkit-user-select: none;
+    margin: 0;
+    margin-right: 2vh;
+    letter-spacing: .15rem;
+}
+
+.Notif.success {
+    background: rgb( 42 , 160 , 31 );
+}
+
+.Notif.error button:hover {
+    color: rgb(186 , 42 , 32 ); 
+}
+
+.Notif.error {
+    background: rgb(186 , 42 , 32 );
+}
+.Notif.infos {
+
+}
+.Notif.bug {
+
+}
+
+.Notif.mask {
+    /* 
+        default Notif
+    */
+
+}

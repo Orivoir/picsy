@@ -1,40 +1,73 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import Confirm from './../Confirm/Confirm';
+import './ControlImg.css';
 
 function ControlImg({
+    manualOpen,
     open,
     onClose,
     onRemove,
     onRname,
     loadRname,
-    pic
+    pic,
+    errorsRname,
+    onOpen
 }) {
 
     const [confirm,setConfirm] = useState(false);
     const [inputRname,setInputRname] = useState(false);
     const [rname,setRname] = useState("");
+    const [firstControl] = useState( React.createRef() );
+    const [rnameRef] = useState( React.createRef() );
+
+    useEffect( () => {
+
+        if( open && !confirm )
+            setTimeout(() => (
+                firstControl.current.focus()
+            ) , 250);
+
+    } ) ;
 
     return (
         <ul
-            className={`${open ? "":"hide"}`}
+            className={`ControlImg`}
+            onMouseEnter={() => onOpen()}
+            onMouseLeave={() => {
+                if( !manualOpen ) {
+                    onClose()
+                }
+            }}
         >
-            <li>
+            <li
+                className={`${open ? "":"hide"}`}
+            >
                 <button
-                    onClick={() => setInputRname(true)}
+                    onContextMenu={e => e.preventDefault()}
+                    ref={firstControl}
+                    className={`${inputRname ? 'hide':''}`}
+                    onClick={() => {
+                        setInputRname(true);
+                        setTimeout(() => 
+                            rnameRef.current.focus(), 120
+                        );
+                    }}
                 >
                     <i className="fas fa-pen"></i>
                 </button>
 
                 
                 <form
-                        className={`${inputRname ? '':'hide'}`}
+                        className={`${inputRname ? '':'close'}`}
                         onSubmit={e => {
                             e.preventDefault();
                             onRname( rname );
                         }}
                     >
 
-                        <input 
+                        <input
+                            ref={rnameRef}
+                            className={`input-rname rname ${!inputRname ? 'hide':'open'}`}
                             type="text"
                             name="rname"
                             onChange={e => setRname( e.target.value )}
@@ -42,10 +75,11 @@ function ControlImg({
                             placeholder={pic.get('name')}
                             disabled={!!loadRname}
                         />
-
+ 
                         <button
                             type="button"
                             onClick={() => setInputRname(false)}
+                            className={`rname-btn ${inputRname ? '':'hide'}`}
                         >
                             {
                                 loadRname ||
@@ -53,36 +87,48 @@ function ControlImg({
                             }
                         </button>
 
+                        {
+                            errorsRname.map( error => (
+                                error
+                            )  )
+                        }
+
                 </form>
             </li>
 
-            <li>
-                <button
-                    onClick={() =>
-                        setConfirm( <Confirm
-                            onConfirm={() => {
-                                onRemove();
-                            }}
-                            onFinally={() => setConfirm( false )}
-                            text={`êtes vous sur de vouloir supprimez l'album ${pic.get('name')}`}
-                            textConfirm="oui"
-                            textCancel="non"
-                            className="confirm-remove confirm-remove-album"
-                            title="Suppréssion"
-                            icons
-                            autoFocus
-                        />)
-                    }
-                >
-                    {
-                        confirm || (
+            <li
+                className={`${open ? "":"hide"}`}
+            >
+                {
+
+                    confirm || (
+                        <button
+                            onClick={() =>
+                                setConfirm(
+                                    <Confirm
+                                        onConfirm={() => {
+                                            onRemove();
+                                        }}
+                                        onFinally={() => setConfirm( false )}
+                                        text={`êtes vous sur de vouloir supprimez l'image ${pic.get('name')}`}
+                                        textConfirm="oui"
+                                        textCancel="non"
+                                        className="confirm-remove confirm-remove-picture"
+                                        title="Suppréssion"
+                                        icons
+                                        autoFocus
+                                />
+                            )}
+                        >
                             <i className="fas fa-trash"></i>
-                        )
-                    }
-                </button>
+                        </button>       
+                    )
+                }
             </li>
 
-            <li>
+            <li    
+                className={`${open ? "":"hide"}`}
+            >
                 <button
                     onClick={() => onClose instanceof Function ? onClose(): null}
                 >

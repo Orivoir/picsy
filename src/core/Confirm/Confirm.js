@@ -1,4 +1,5 @@
 import React,{useEffect} from 'react';
+import './Confirm.css'
 
 const 
     confirmRef = React.createRef()
@@ -50,6 +51,7 @@ function Confirm({
             <aside>
                 <button
                     type="button"
+                    className="confirm"
                     onClick={() => {
                         const
                             conf = onConfirm instanceof Function ? onConfirm: () => {},
@@ -64,10 +66,13 @@ function Confirm({
                     {icons && (
                         <i className="fas fa-check"></i>
                     )}
-                    {textConfirm}
+                    <span>
+                        {textConfirm}
+                    </span>
                 </button>
                 
                 <button
+                    className="cancel"
                     ref={btnsRef.cancel}
                     type="button"
                     onClick={() => {
@@ -83,7 +88,9 @@ function Confirm({
                     {icons && (
                         <i className="fas fa-times"></i>
                     )}
-                    {textCancel}
+                    <span>
+                        {textCancel}
+                    </span>
                 </button>
             </aside>
 

@@ -1,0 +1,14 @@
+.ImgFilter {
+
+    position: relative;
+    margin: 0;
+    display: inline-block;
+    overflow: hidden;
+    z-index: 100;
+}
+
+.ImgFilter img {
+
+    display: inline-block;
+    height: auto;
+}

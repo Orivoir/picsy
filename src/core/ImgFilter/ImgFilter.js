@@ -1,4 +1,5 @@
 import React from 'react';
+import './ImgFilter.css';
 
 const buildFilter = filters => {
 
@@ -20,12 +21,26 @@ const buildFilter = filters => {
     return styles;
 } ;
 
-function ImgFilter( {pics,load,figcaption,width} ) {
+function ImgFilter( {
+    pics,
+    load,
+    figcaption,
+    width,
+    classFig
+} ) {
 
     return (
-        <figure>
+        <figure
+            className="ImgFilter"
+        >
             {load || (
                 <>
+                
+                    {figcaption && (
+                        <figcaption className={classFig}>
+                            {figcaption}
+                        </figcaption>
+                    )}
                     <img
                         src={pics.get('blob')}
                         alt={pics.get('name')}
@@ -34,12 +49,6 @@ function ImgFilter( {pics,load,figcaption,width} ) {
                         }}
                         width={width || 300}
                     />
-
-                    {figcaption && (
-                        <figcaption>
-                            {figcaption}
-                        </figcaption>
-                    )}
                 </>
             )}
         </figure>

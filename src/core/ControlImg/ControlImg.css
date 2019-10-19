@@ -1,0 +1,123 @@
+.ControlImg {
+
+    display: flex;
+    flex-direction: column;
+    background: #000;
+    justify-content: space-around;
+    padding: 0 1.85vh;
+    height:  calc( 100% - 3px );
+}
+
+
+.ControlImg li input:focus {
+
+    border-color: #fff ;
+    background: #000;
+    color: #fff; 
+}
+
+
+.ControlImg li input::selection {
+
+    background: #fff;
+    color: #000;
+}
+
+.ControlImg li input {
+
+    border: .62vh solid rgb( 95,95,95 );
+
+    padding: 1vh;
+    border-radius: 0;
+    border-top-left-radius: 50px; 
+    border-bottom-left-radius: 50px;
+}
+.ControlImg li:last-child {
+
+    margin-bottom: 0;
+}
+.ControlImg li button {
+
+    border-color: #fff;
+    color: #fff;
+    padding: 1vh 2vh;
+    opacity: .5;
+    border-color: transparent;
+}
+
+.ControlImg li form {
+
+    transition: .12s linear all;
+    opacity: 1;
+    transform: scaleY(1) skewX(0deg);
+    display: block;
+    width: auto;
+    height: auto;
+}
+
+.ControlImg li form.close {
+    
+    opacity: 0;
+    transform: scaleY(0) skewX(90deg);
+    width: 0;
+    height: 0;
+
+}
+
+.ControlImg li form button.rname-btn {
+
+    min-height: 33px;
+    max-height: 55px;
+    height: 6vh;
+    border-left: none;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+    background: #fff;
+    color: #000;
+    opacity: 1;
+}
+
+.ControlImg .input-rname {
+    min-height: 33px;
+    max-height: 55px;
+    height: 6vh;
+    transform: scaleX(0);
+    transition: .35s linear all;
+}
+
+.ControlImg .input-rname.open {
+
+    transform: scaleX( 1 );
+}
+.ControlImg li form 
+.Notif p  {
+    margin-right: 0vh;
+    letter-spacing: 0rem;
+    font-size: 13px;
+}
+
+.ControlImg li form .Notif {
+
+    letter-spacing: 0;
+    padding: .25vh .6vh;
+}
+
+.ControlImg li form button i {
+
+    display: inline-block;
+    transition: .25s ease-in-out all;
+}
+
+.ControlImg li form button:hover i ,
+.ControlImg li form button:focus i {
+
+    transform: rotate( 360deg ) scale(1.5);
+    color: rgb(186,42,18);
+}
+
+.ControlImg li button:hover ,    
+.ControlImg li button:focus {    
+    
+    opacity: 1;
+    border-color: #fff;
+}

@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import './Notif.css';
 
 function assoceIconType( type ) {
 
@@ -29,7 +30,6 @@ function Notif( {
             ref={refNotif}
             className={`Notif ${className} ${type}`}
         >
-            
             <p>
                 <i className={assoceIconType(type)}></i>
 

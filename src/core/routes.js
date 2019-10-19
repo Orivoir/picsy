@@ -42,22 +42,10 @@ const routes = [
         name: "show album"
     },
     {
-        id:4,
-        exact:false,
-        render: PictureRoute,
-        props: {
-            action: "add"
-        },
-        path: "/add-picture",
-        name: "add album"
-    },
-    {
         id:5,
         exact:false,
         render: PictureRoute,
-        props: {
-            action: "filter"
-        },
+        props: {},
         path: "/filter/:id",
         name: "filter album"
     },

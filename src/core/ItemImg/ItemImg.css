@@ -1,0 +1,53 @@
+.ItemImg {
+    display: flex;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    border: 2px solid transparent;
+}
+
+.ItemImg .link-filter {
+
+    border: 2px solid transparent;
+}
+
+.status-control {
+
+    height: 100%;
+}
+.ItemImg .link-filter:focus {
+
+    border-color: rgba( 42,34,71,.8 );
+}
+
+.fig-picsy {
+
+    position: absolute;
+    background: rgba( 0,0,0,.85 );
+    width: 40px;
+    height: 40px;
+    transform: scale( 0 );
+    transition: .25s linear all;
+}
+
+figure:hover .fig-picsy {
+
+    transform: scale( 1 );
+}
+
+.fig-picsy button {
+
+    position: relative;
+    left: 5px;
+    top: 5px;
+    color: #fff;
+    opacity: .65;
+    font-size: 3vh;
+    transition: .1s ease-in-out all;
+}
+
+.fig-picsy button:hover {
+
+    transform: rotate( 90deg) scale(1.3) ;
+    opacity: 1;
+}
+ 

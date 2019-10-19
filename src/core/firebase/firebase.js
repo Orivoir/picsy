@@ -132,6 +132,54 @@ const
       } ) ;
 
     }
+    ,rnameImg( pictureID , rname , pictureAlbumID) {
+
+      return new Promise( (resolve , reject) => {
+
+        
+        if(
+          !(pictureID || rname )
+        )
+        reject();
+
+        const refPicture = this.pictures.doc( pictureID ) ;
+
+          this.pictures.get()
+          .then( QuerySnapshot  => {
+
+            if( 
+              !QuerySnapshot.docs.find( doc => (
+                doc.get('name') === rname &&
+                doc.get('album_id') === pictureAlbumID                 
+              ) ) 
+            ) {    
+              refPicture.get()
+                .then( pic => {
+                  refPicture.set({
+                    blob: pic.get('blob')
+                    ,album_id: pic.get('album_id')
+                    ,filters: pic.get('filters') || []
+                    ,name: rname
+                  }).then( () => resolve( {success:true} ) )
+                  .catch( err => reject( err ) ) ;
+                } ).catch( err => resolve( {
+                  success:false
+                  ,status: 404
+                  ,err: err
+                } ) ) ;
+            } else {
+              resolve( {
+                success: false
+                ,status: 401 // 401 Bad Request
+                ,details: 'name already exists'
+              } )
+            }
+
+          } )
+          .catch( () => reject() ) ;
+
+      } ) ;
+    }
     ,rnameAlbum( albumID , rname  ) {
 
       return new Promise( ( resolve , reject ) => {
@@ -177,6 +225,29 @@ const
             .catch( err => reject( err ) )
       )  ) ;
 
+    }
+    ,removePicture: function( pictureID ) {
+
+      return new Promise( (resolve,reject) => {
+
+        if( !pictureID ) return reject();
+
+        const refImg = this.pictures.doc( pictureID ) ;
+
+        if( !refImg || !( refImg.get instanceof Function ) ) return resolve({
+          status: 404,
+          success: false
+        });
+
+        refImg.get().then( () => {
+
+          refImg.delete().then(() =>  resolve({
+            success: true
+          }))
+          .catch( () => reject() ) ;
+        }) ;
+
+      });
     }
     ,removeAlbum: function(albumID) {
 

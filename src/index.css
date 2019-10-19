@@ -28,4 +28,23 @@ code {
 .hide , 
 .hidden {
   display: none;
-} 
+}
+
+.o-hide , 
+.o-hidden {
+  opacity: 0;
+}
+
+button {
+
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid #000;
+  transition: .15s linear all;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

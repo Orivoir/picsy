@@ -5,9 +5,11 @@ export default class PictureRoute extends React.Component {
     render() {
 
         return(
-            <>
-            PictureRoute
-            </>
+            <section>
+
+                {/* <ImgFilter /> */}
+
+            </section>
         )
     }
 };
