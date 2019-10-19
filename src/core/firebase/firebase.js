@@ -18,6 +18,21 @@ const
             .catch( err => reject( err ) )
         ) ) ;
     }
+    ,getImgsOf( albumID ) {
+
+      return new Promise( (resolve,reject) => (
+        this.albums.doc( albumID )
+        .get()
+        .then( () => (
+          this.pictures.get()
+          .then( QuerySnapshot => (
+            resolve(QuerySnapshot.docs.filter( doc => (
+              doc.get('album_id') === albumID
+            ) ) )
+          ) ).catch( err => reject( err ) )
+        ) ).catch( err => reject(err) )
+       ) ) ;
+    }
     ,addAlbum( name , userID  ) {
 
       return new Promise( (resolve,reject) => {
@@ -102,6 +117,7 @@ const
                   ,blob: picture
                   ,createAt: Date.now()
                   ,name: name
+                  ,filters: []
                 } ).then( () => resolve( {success: true} ) )
                 .catch( err => reject( err ) )
               }

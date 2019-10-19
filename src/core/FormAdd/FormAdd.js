@@ -1,13 +1,22 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import InputFile from './../InputFile/InputFile';
 import Notif from './../Notif/Notif';
 import './FormAdd.css';
 
-function FormAdd({type,onSubmit,load,className}){
+function FormAdd({type,onSubmit,load,className,voidForm}){
 
     const [picture,setPicture] = useState("");
     const [errors,setErrors] = useState([]);
     const [name,setName] = useState("");
+    const [refName] = useState( React.createRef() );
+
+    useEffect( () => {
+
+        if( voidForm ) {
+            refName.current.value = "";
+        }
+
+    } ) ;
 
     return (
         <form
@@ -29,7 +38,8 @@ function FormAdd({type,onSubmit,load,className}){
         >
 
             <label htmlFor="name">nom</label>
-            <input 
+            <input
+                ref={refName}
                 type="text"
                 placeholder={`nom de l'${!/album/i.test(type) ? 'image':'album' }`}
                 autoComplete="off"

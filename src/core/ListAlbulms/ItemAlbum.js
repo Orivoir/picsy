@@ -40,15 +40,15 @@ function ItemAlbum({
                     onClick={() => setRedirect( <Redirect to={`album/${item.id}`} /> )}
                     onContextMenu={e => e.preventDefault()}
                 >
-                <Link
-                    onPointerUp={e => {
-                        if(e.nativeEvent.which === 3 )
-                            setControl(true);
-                    }}
-                    to={`album/${item.id}`}
-                >
-                    {name}
-                </Link>
+                    <Link
+                        onPointerUp={e => {
+                            if(e.nativeEvent.which === 3 )
+                                setControl(true);
+                        }}
+                        to={`album/${item.id}`}
+                    >
+                        {name}
+                    </Link>
                 </button>
 
                 <section>

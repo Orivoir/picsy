@@ -77,7 +77,7 @@ function ControlAlbums({
                                             onRemove();
                                         }}
                                         onFinally={() => setConfirm( false )}
-                                        text={`êtes vous sur de vouloir supprimez l'album ${album.name}`}
+                                        text={`êtes vous sur de vouloir supprimez l'album ${album.get('name')}`}
                                         textConfirm="oui"
                                         textCancel="non"
                                         className="confirm-remove confirm-remove-album"

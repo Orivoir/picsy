@@ -3,21 +3,47 @@ import {useParams} from 'react-router-dom';
 import FormAdd from './../FormAdd/FormAdd';
 import Loader from './../Loader/Loader';
 import Notif from './../Notif/Notif';
+import ListImg from './../ListImg/ListImg';
+
+const getPics = (db,id) => {
+
+    return new Promise( (resolve,reject) => {
+
+        db.getImgsOf( id )
+            .then( pics => {
+                resolve( pics );
+            } )
+            .catch( err => reject() )
+        ;
+    } ) ;
+}
 
 function ShowAlbum({db}) {
+    
     const {id} = useParams();
     const [loaderAddPicture,setLoaderAddPicture] = useState( false );
     const [errors,setErrors] = useState([]);
+    const [voidForm,setVoidForm] = useState( false );
+    const [pictures,setPictures] = useState({
+        pics:false
+        ,loader:<Loader
+            width={64}
+            bg="rgba(0,0,0,.9)"
+            type="timer"
+        />
+    });
 
     return (
         <>
             <FormAdd
                 type="picture"
+                voidForm={voidForm}
                 onSubmit={({name,picture}) => {
                     
                     if( 
                         name.length <= 42 &&
-                        name.length >= 2
+                        name.length >= 2 &&
+                        picture
                     ) {
                         setLoaderAddPicture( <Loader type="btn" width={16} />);
                         db.addPicture(id,name, picture)
@@ -33,6 +59,7 @@ function ShowAlbum({db}) {
                                     type="success"
                                     onClose={({remove}) => remove()}
                                 /> ] ) ;
+                                setVoidForm( true );
 
                             } else {
                                 setErrors( [ ...errors , <Notif
@@ -46,9 +73,12 @@ function ShowAlbum({db}) {
                         } ) ;
                     }
                     else {
+
+                        const mssg = picture ? "taille de nom invalide":"vous n'avez pas envoyé de fichier"
+
                         setErrors( [ ...errors , <Notif
                             key={Date.now()}
-                            text="taille de nom invalide"
+                            text={mssg}
                             type="error"
                             onClose={({remove}) => remove()}
                         /> ] ) ;
@@ -57,6 +87,20 @@ function ShowAlbum({db}) {
                 load={loaderAddPicture}
             />
             {errors.map( error => error )}
+
+            <ListImg
+                items={
+                    !pictures.pics ?
+                    getPics(db,id).then( pics => {
+                        setPictures( {
+                            pics:pics
+                            ,loader:false
+                        } )
+                    } ) : pictures.pics
+                }
+                load={pictures.loader}
+            />
+
         </>
     )
 }

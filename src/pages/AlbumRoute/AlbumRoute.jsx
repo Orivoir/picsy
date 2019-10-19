@@ -18,7 +18,7 @@ export default class AlbumRoute extends React.Component {
 
     static add() {
 
-        return "add"
+        return "add";
     }
 
     constructor(props) {
@@ -26,7 +26,6 @@ export default class AlbumRoute extends React.Component {
         super( props );
         this.userID = localStorage.getItem('userID');
 
-        
         if( !this.userID ) {
             this.setState( {
                 loader: false,
@@ -144,7 +143,9 @@ export default class AlbumRoute extends React.Component {
                     )  : (
                         // show album
                         <>
-                            <ShowAlbum db={this.props.db} />
+                            <ShowAlbum
+                                db={this.props.db}
+                            />
                         </>
                     )
                     

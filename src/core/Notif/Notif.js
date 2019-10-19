@@ -1,6 +1,4 @@
-import React from 'react';
-
-const refNotif = React.createRef();
+import React, {useState} from 'react';
 
 function assoceIconType( type ) {
 
@@ -23,6 +21,8 @@ function Notif( {
     ,onClose
     ,text
 } ) {
+
+    const [refNotif] = useState( React.createRef() );
 
     return (
         <section
