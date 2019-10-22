@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.460c98ca.chunk.css",
+    "main.js": "/static/js/main.e7a519dc.chunk.js",
+    "main.js.map": "/static/js/main.e7a519dc.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.23ad1654.js",
+    "runtime-main.js.map": "/static/js/runtime-main.23ad1654.js.map",
+    "static/js/2.36ab1446.chunk.js": "/static/js/2.36ab1446.chunk.js",
+    "static/js/2.36ab1446.chunk.js.map": "/static/js/2.36ab1446.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.192f68afcb378240bf32256b51949880.js": "/precache-manifest.192f68afcb378240bf32256b51949880.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.460c98ca.chunk.css.map": "/static/css/main.460c98ca.chunk.css.map",
+    "static/media/loader-azure.svg": "/static/media/loader-azure.df696f68.svg",
+    "static/media/loader-button.svg": "/static/media/loader-button.3de4de61.svg",
+    "static/media/loader-earth.svg": "/static/media/loader-earth.5f4bc2b1.svg",
+    "static/media/loader-timer.svg": "/static/media/loader-timer.8835a88b.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.23ad1654.js",
+    "static/js/2.36ab1446.chunk.js",
+    "static/css/main.460c98ca.chunk.css",
+    "static/js/main.e7a519dc.chunk.js"
+  ]
+}
