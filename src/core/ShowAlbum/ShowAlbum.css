@@ -1,0 +1,30 @@
+.ShowAlbum h2 {
+
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.ShowAlbum form figure {
+
+    transition: .13s linear all;
+}
+
+.ShowAlbum form figure:hover {
+
+    transform: rotate(-20deg);
+
+}
+
+.ShowAlbum figure img {
+
+    display: inline-block;
+}
+.ShowAlbum figure button:focus {
+
+    border-color: rgb( 127,127,127 );
+}
+
+.ShowAlbum figure button {
+
+    border: 2px solid transparent;
+}

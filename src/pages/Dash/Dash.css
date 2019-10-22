@@ -1,0 +1,38 @@
+.Dash .Notif.infos {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.Dash aside.add-album p a {
+
+    display: inline-block;
+    transition: .11s linear all;
+    color:#fff;
+}
+.Dash aside.add-album p a:hover {
+
+    transform: rotate( -18deg );
+
+}
+.Dash aside.add-album p {
+
+    transition: .12s linear all;
+    background: rgb( 85,85,85 );
+    text-align: center;
+    font-size: 5.8vh;
+}
+
+.Dash aside.add-album {
+
+    position: fixed;
+    bottom: 0%;
+    width: 100%;
+}
+
+.Dash {
+
+    height: 100%;
+    min-height: 100%;
+    background: rgb(225,225,225);
+}

@@ -18,6 +18,104 @@ const
             .catch( err => reject( err ) )
         ) ) ;
     }
+    ,pictureSetFilters( pictureID , filters ) {
+
+      return new Promise( (resolve , reject) => {
+
+        this.pictures.doc( pictureID )
+        .get()
+        .then( picture => { // picture exists
+          const refPicture = this.pictures.doc( pictureID ) ;
+          
+          const delDouble = picture.get('filters').filter( f => {
+
+              return !filters.find( fDelta => fDelta.key === f.key )
+          } ) ;
+
+          // set picture
+          refPicture.get()
+          .then( () => (
+            refPicture.set({
+              name: picture.get('name')
+              ,createAt: picture.get('createAt')
+              ,album_id: picture.get('album_id')
+              ,filters: [ ...delDouble , ...filters ]
+              ,blob: picture.get('blob') 
+            }).then( () => resolve({success:true}) )
+            .catch( err => reject( err ) )
+          ) ).catch( err => reject( err ) ) ;
+
+        } )
+        .catch( err => reject( err ) ) ;
+
+      } ) ;
+    }
+    ,pictureSetFilter( pictureID , filter ) {
+
+      return new Promise( (resolve , reject) => {
+
+        this.pictures.doc( pictureID )
+        .get()
+        .then( picture => { // picture exists
+
+          let currentFilter = picture.get('filters') ;
+          
+          let found = false;
+          const newFilter = currentFilter.map( current => {
+
+              try {
+                if( typeof current === 'string' )
+                  current = JSON.parse(current)
+
+              } catch( SyntaxError ) {
+                
+                current = {};
+              }
+              if(current.key === filter.key) {
+                current.val = filter.val;
+                found = true;
+              }
+
+              return current ;
+
+          }  ) ;
+
+          if( !found ) {
+
+            newFilter.push( JSON.stringify( {
+              key: filter.key
+              ,val: filter.val
+            } ) ) ;
+          }
+
+          const refPicture = this.pictures.doc( pictureID ) ;
+          
+          // set picture
+          refPicture.get()
+          .then( () => (
+            refPicture.set({
+              name: picture.get('name')
+              ,createAt: picture.get('createAt')
+              ,album_id: picture.get('album_id')
+              ,filters: newFilter.filter( track => {
+                try {
+                  if( typeof track === 'string' )
+                    track = JSON.parse(track);
+                }catch( SyntaxError ) {
+                  return false;
+                }
+                return track.key && track.val;
+              })
+              ,blob: picture.get('blob') 
+            }).then( () => resolve({success:true}) )
+            .catch( err => reject( err ) )
+          ) ).catch( err => reject( err ) ) ;
+
+        } )
+        .catch( err => reject( err ) ) ;
+
+      } ) ;
+    }
     ,getImgsOf( albumID ) {
 
       return new Promise( (resolve,reject) => (
@@ -67,6 +165,44 @@ const
 
       } ) ;
     }
+    ,albumUp( albumID ) {
+
+      return new Promise( ( resolve, reject ) => {
+
+        const refAlbum = this.albums.doc( albumID ) ;
+
+        refAlbum.get().then( album => {
+
+          refAlbum.set( {
+            createAt: album.get('createAt')
+            ,name: album.get('name')
+            ,size: parseInt(album.get('size'))+1
+            ,user_id: album.get('user_id') 
+          } ).then( () => resolve({success:true}) )
+          .catch( err => reject(err) ) ;
+        } )
+        .catch( err => reject( err) ) ;
+      });
+    }
+    ,albumDown( albumID ) {
+
+      return new Promise( ( resolve, reject ) => {
+
+        const refAlbum = this.albums.doc( albumID ) ;
+
+        refAlbum.get().then( album => {
+
+          refAlbum.set( {
+            createAt: album.get('createAt')
+            ,name: album.get('name')
+            ,size: parseInt(album.get('size'))-1
+            ,user_id: album.get('user_id') 
+          } ).then( () => resolve({success:true}) )
+          .catch( err => reject(err) ) ;
+        } )
+        .catch( err => reject( err) ) ;
+      });
+    }
     ,getPictureOf( albumID ) {
 
       return new Promise( ( resolve, reject ) => {
@@ -112,13 +248,19 @@ const
                 } ) ;
               } else {
 
+
+
                 this.pictures.add( {
                   album_id: albumID
                   ,blob: picture
                   ,createAt: Date.now()
                   ,name: name
                   ,filters: []
-                } ).then( () => resolve( {success: true} ) )
+                } ).then( () => {
+                  this.albumUp( albumID ).then( () => {
+                    resolve( {success: true} )
+                  } ).catch( err => reject( err ) )
+                } )
                 .catch( err => reject( err ) )
               }
             }
@@ -160,6 +302,7 @@ const
                     ,album_id: pic.get('album_id')
                     ,filters: pic.get('filters') || []
                     ,name: rname
+                    ,createAt: pic.get('createAt') || Date.now()
                   }).then( () => resolve( {success:true} ) )
                   .catch( err => reject( err ) ) ;
                 } ).catch( err => resolve( {
@@ -239,11 +382,16 @@ const
           success: false
         });
 
-        refImg.get().then( () => {
+        refImg.get().then( pic => {
 
-          refImg.delete().then(() =>  resolve({
-            success: true
-          }))
+          refImg.delete().then(() => { 
+
+            this.albumDown( pic.get('album_id') ).then( () => {
+              resolve({
+                success: true
+              } )
+            } ).catch( err => reject( err ) ) ;
+          })
           .catch( () => reject() ) ;
         }) ;
 
@@ -270,8 +418,16 @@ const
         refAlbum.get().then( () => {
             refAlbum.delete()
               .then( () => {
-                // remove all files here of this album here
-                resolve({success: true})
+
+                this.getPictureOf( albumID ).then( pics => {
+
+                  pics.map( pic => (
+                      this.removePicture( pic.id )
+                 ) ) ;
+
+                  resolve({success: true});
+                }  ).catch( err => reject( err ) )
+
               } )
               .catch( err => reject( err ) )
             ;

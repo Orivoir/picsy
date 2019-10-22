@@ -1,15 +1,21 @@
-.ControlImg {
-
+.ControlItem {
+    z-index: 9999999999;
     display: flex;
     flex-direction: column;
     background: #000;
     justify-content: space-around;
     padding: 0 1.85vh;
-    height:  calc( 100% - 3px );
+    height:  calc( 100% - 10px );
+}
+
+.ControlItem li img {
+
+    display: inline-block;
+    height: 100%;
 }
 
 
-.ControlImg li input:focus {
+.ControlItem li input:focus {
 
     border-color: #fff ;
     background: #000;
@@ -17,13 +23,13 @@
 }
 
 
-.ControlImg li input::selection {
+.ControlItem li input::selection {
 
     background: #fff;
     color: #000;
 }
 
-.ControlImg li input {
+.ControlItem li input {
 
     border: .62vh solid rgb( 95,95,95 );
 
@@ -32,11 +38,11 @@
     border-top-left-radius: 50px; 
     border-bottom-left-radius: 50px;
 }
-.ControlImg li:last-child {
+.ControlItem li:last-child {
 
     margin-bottom: 0;
 }
-.ControlImg li button {
+.ControlItem li button {
 
     border-color: #fff;
     color: #fff;
@@ -45,7 +51,7 @@
     border-color: transparent;
 }
 
-.ControlImg li form {
+.ControlItem li form {
 
     transition: .12s linear all;
     opacity: 1;
@@ -55,7 +61,7 @@
     height: auto;
 }
 
-.ControlImg li form.close {
+.ControlItem li form.close {
     
     opacity: 0;
     transform: scaleY(0) skewX(90deg);
@@ -64,7 +70,7 @@
 
 }
 
-.ControlImg li form button.rname-btn {
+.ControlItem li form button.rname-btn {
 
     min-height: 33px;
     max-height: 55px;
@@ -77,7 +83,7 @@
     opacity: 1;
 }
 
-.ControlImg .input-rname {
+.ControlItem .input-rname {
     min-height: 33px;
     max-height: 55px;
     height: 6vh;
@@ -85,38 +91,38 @@
     transition: .35s linear all;
 }
 
-.ControlImg .input-rname.open {
+.ControlItem .input-rname.open {
 
     transform: scaleX( 1 );
 }
-.ControlImg li form 
+.ControlItem li form 
 .Notif p  {
     margin-right: 0vh;
     letter-spacing: 0rem;
     font-size: 13px;
 }
 
-.ControlImg li form .Notif {
+.ControlItem li form .Notif {
 
     letter-spacing: 0;
     padding: .25vh .6vh;
 }
 
-.ControlImg li form button i {
+.ControlItem li form button i {
 
     display: inline-block;
     transition: .25s ease-in-out all;
 }
 
-.ControlImg li form button:hover i ,
-.ControlImg li form button:focus i {
+.ControlItem li form button:hover i ,
+.ControlItem li form button:focus i {
 
     transform: rotate( 360deg ) scale(1.5);
     color: rgb(186,42,18);
 }
 
-.ControlImg li button:hover ,    
-.ControlImg li button:focus {    
+.ControlItem li button:hover ,    
+.ControlItem li button:focus {    
     
     opacity: 1;
     border-color: #fff;

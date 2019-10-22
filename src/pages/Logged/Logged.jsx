@@ -1,9 +1,11 @@
 import React from 'react';
 import Loader from './../../core/Loader/Loader';
 import {Redirect} from 'react-router-dom';
-// import docCookies from 'doc-cookies';
+import docCookies from 'doc-cookies';
 import InputFile from './../../core/InputFile/InputFile';
 import Notif from './../../core/Notif/Notif';
+import SignIn from './../../core/SignIn/SignIn';
+import './Logged.css' ;
 
 export default class Logged extends React.Component {
 
@@ -15,15 +17,16 @@ export default class Logged extends React.Component {
         ,avatar: Logged.defaultAvatar
         ,errors: []
         ,loaderButton: false
+        ,fileName: ""
     } ;
 
-    static defaultAvatar = '';
+    static defaultAvatar = 'https://image.flaticon.com/icons/png/128/149/149071.png';
 
     constructor( props ) {
 
         super( props );
 
-        this.userID = localStorage.getItem('userID') //|| docCookies.getItem('userID') ;
+        this.userID = localStorage.getItem('userID') || docCookies.getItem('userID');
 
         this.avatarChange = this.avatarChange.bind( this ); 
         this.onSubmit = this.onSubmit.bind( this );
@@ -67,7 +70,7 @@ export default class Logged extends React.Component {
                     const userID = data.id ;
 
                     localStorage.setItem('userID' , userID);
-                    // docCookies.setItem('userID' , userID );
+                    docCookies.setItem('userID' , userID );
 
                     this.setState( {
                         redirect: <Redirect to="/dash" />
@@ -88,6 +91,7 @@ export default class Logged extends React.Component {
         if( file.size <= 1e6 && /image/.test(file.type) ) {
             this.setState( {
                 avatar: blob
+                ,fileName: file.name
             } ) ;
             
         } else {
@@ -142,6 +146,7 @@ export default class Logged extends React.Component {
             ,avatar
             ,errors
             ,loaderButton
+            ,fileName
         } = this.state;
 
         return(
@@ -154,47 +159,87 @@ export default class Logged extends React.Component {
                 <form
                     onSubmit={this.onSubmit}
                 >
+                    <section>
+                        <div className="field-wrap-pseudo">
+                            <input
+                                placeholder="pseudo"
+                                type="text" 
+                                name="pseudo"
+                                autoComplete="off" 
+                                onChange={e => (
+                                    this.setState({pseudo:e.target.value.trim()})
+                                )}
+                                value={this.state.pseudo}
+                            />
+                            <label htmlFor="pseudo" className={`o-hide ${this.state.pseudo.trim().length ? 'active':''}`}>pseudo</label>
+                        </div>
+                        
+                        <div>
+                            <InputFile
+                                className="hide"
+                                label={
+                                    <>
+                                        <span className="hide micro-system">
+                                            {
+                                                fileName ?
+                                                    fileName.length > 7 ?
+                                                    fileName.slice( 0 , 7 ) + ' ...' :
+                                                    fileName :
+                                                    'avatar'
+                                            }
+                                        </span>
+                                        <figure>
+                                            <button 
+                                                type="button"
+                                                onClick={e => {
+                                                    e.target.parentNode.click();
+                                                }}
+                                            >
+                                                <img
+                                                    src={avatar}
+                                                    alt="avatar"
+                                                    width={64}
+                                                />
+                                            </button>
+                                            <figcaption>
+                                                changer
+                                            </figcaption>
+                                        </figure>
+                                    </>
+                                }
+                                name="avatar"
+                                autoRead
+                                onChange={(file,blob,e) => (
+                                    this.avatarChange(file,blob,e)
+                                ) }
+                            />
+                        </div>
 
-                    <div>
-                        <label htmlFor="pseudo">pseudo</label>
-                        <input 
-                            type="text" 
-                            name="pseudo"
-                            autoComplete="off" 
-                            onChange={e => (
-                                this.setState({pseudo:e.target.value})
-                            )} 
-                        />
-                    </div>
+                        <button type="submit">
+                            {loaderButton || 'suivant'}
+                        </button>
+                    </section>
+
                     
-                    <div>
-                        <InputFile
-                            className="hide"
-                            label={
-                                <figure>
-                                    <img
-                                        src={avatar}
-                                        alt="avatar"
-                                        width={64}
-                                    />
-                                </figure>
-                            }
-                            name="avatar"
-                            autoRead
-                            onChange={(file,blob,e) => (
-                                this.avatarChange(file,blob,e)
-                            ) }
-                        />
-                    </div>
+                    <SignIn />
 
-                    <button type="submit">
-                        {loaderButton || 'suivant'}
-                    </button>
                     {errors.map( error => (
-                        error
+                            error
                     ) )}
 
                 </form>
+
+                <section className="banner-sm-screen hide">
+
+                        <p>
+                            Picsy et Lorem dolore veniam culpa velit sint ,
+                            Anim cupidatat mollit consequat et ipsum ipsum eu ullamco eu ullamco elit non.
+                        </p>
+
+                        <button type="button">
+                            get started
+                        </button>
+                </section>
 
             </section>
         );

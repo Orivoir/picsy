@@ -1,6 +1,7 @@
 import React from 'react';
 import FormAdd from './../../core/FormAdd/FormAdd';
 import {Redirect} from 'react-router-dom';
+import docCookies from 'doc-cookies';
 import Loader from './../../core/Loader/Loader';
 import User from './../../core/User/User';
 import Notif from './../../core/Notif/Notif';
@@ -13,6 +14,8 @@ export default class AlbumRoute extends React.Component {
         loader: <Loader width={16} type="btn" />
         ,redirect: false
         ,loadUser: <Loader full width={48} type="time" bg="rgba(0,0,0,.9)" />
+        ,loaderAlbum: <Loader full width={48} type="az" bg="rgba(0,0,0,.9)" />
+        ,album: null
         ,errors: []
     } ;
 
@@ -24,7 +27,19 @@ export default class AlbumRoute extends React.Component {
     constructor(props) {
 
         super( props );
-        this.userID = localStorage.getItem('userID');
+        this.userID = localStorage.getItem('userID') || docCookies.getItem('userID');
+
+        if( this.props.action !== AlbumRoute.add() ) {
+            
+            this.props.db.albums.doc( document.location.hash.split('/').pop() )
+            .get()
+            .then( album => {
+                this.setState( {
+                    album: album
+                    ,loaderAlbum: false
+                } ) ;
+            } ) ;
+        }
 
         if( !this.userID ) {
             this.setState( {
@@ -46,7 +61,7 @@ export default class AlbumRoute extends React.Component {
                     this.setState( {
                         loader: false,
                         redirect: <Redirect to="/" /> 
-                    } ) ;   
+                    } ) ;
                 }
             });
 
@@ -63,7 +78,9 @@ export default class AlbumRoute extends React.Component {
                 loadUser,
                 errors,
                 formHide,
-                createWithName
+                createWithName,
+                loaderAlbum,
+                album
             } = this.state
         ;
 
@@ -131,7 +148,7 @@ export default class AlbumRoute extends React.Component {
                                         text={<span>
                                             l'album
                                             &nbsp;<Link
-                                                to={`/album/${createWithName}`}
+                                                to={`/`}
                                             >
                                             {createWithName}
                                             </Link> à été créé avec succés
@@ -139,12 +156,22 @@ export default class AlbumRoute extends React.Component {
                                     />
                                 )
                             }
+                            <Notif 
+                                type="back"
+                                text={<>
+                                    <Link to="/dash">
+                                        Tableau de bord
+                                    </Link>
+                                </>}
+                            />
                         </>
                     )  : (
                         // show album
                         <>
                             <ShowAlbum
                                 db={this.props.db}
+                                loaderAlbum={loaderAlbum}
+                                album={album}
                             />
                         </>
                     )

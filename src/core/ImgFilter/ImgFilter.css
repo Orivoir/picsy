@@ -9,6 +9,7 @@
 
 .ImgFilter img {
 
+    z-index: -1;
     display: inline-block;
     height: auto;
 }

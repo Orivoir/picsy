@@ -1,6 +1,8 @@
 import React from 'react';
 import './User.css';
-import {HashLink as Link} from 'react-router-hash-link'
+import {HashLink as Link} from 'react-router-hash-link';
+import ReactToolTip from 'react-tooltip' ;
+import SignIn from './../SignIn/SignIn';
 
 const defaultAvatar = "";
 
@@ -11,21 +13,44 @@ function User({u,load}) {
             <section className="User">
                 {load || (
                     <>
-                        <figure>
+                        <h1>
+                            <strong>Picsy</strong> application
+                            version 0.1.0-beta
+                        </h1>
+                        <div className="content-user">
+                            <figure>
                             <img
                                 src={u.get('avatar') || defaultAvatar}
                                 alt="avatar"
-                                width="96"
+                                width="125"
                             />
                             <figcaption>
                                 {u.get('pseudo')}
                             </figcaption>
                         </figure>
-                        <p>
-                            <Link to="/add-account">
-                                <i className="fas fa-user-plus"></i>
-                            </Link>
-                        </p>
+                            
+                            <ReactToolTip 
+                                id="user"
+                                type="info"
+                                getContent={()=> (
+                                    <p style={{
+                                        fontSize: "16px"
+                                    }}>
+                                        <i className="fas fa-info-circle"></i>
+                                        &nbsp;ajouté un compte
+                                    </p>
+                                )} 
+                                effect="solid"
+                                place="bottom"
+                            />
+                            
+                            <p data-for="user" data-tip="<em>ajouté</em> un compte">
+                                <Link to="/add-account">
+                                    <i className="fas fa-user-plus"></i>
+                                </Link>
+                            </p>
+                        </div>
+                        <SignIn />
                     </>
                 )}
             </section>

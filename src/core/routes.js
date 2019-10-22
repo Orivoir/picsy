@@ -56,7 +56,7 @@ const routes = [
         props: {
             action: "filter"
         },
-        path: "/change",
+        path: "/add-account",
         name: "filter album"
     }
 ] ;

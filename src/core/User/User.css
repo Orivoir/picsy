@@ -1,6 +1,74 @@
+.User h1 {
+
+    margin: 0;
+    text-align: right;
+    color: #fff;
+    margin-right: 3vh;
+    padding-top: 1.2vh;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: .03rem;
+}
+
 .User {
 
-    min-height: 100px;
+    background: rgb(32,32,51);
+    min-height: 62px;
     width: 100%;
     position: relative;
+    margin-bottom: 3.6vh;
+}
+
+.User .content-user {
+    
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.User figure{
+
+    margin: 0;
+    margin-right: 6.2%;
+    position: relative;
+}
+
+.User p {
+
+    font-size: 3.6vh;
+    transition: .13s linear all;
+    margin: 0;
+}
+
+
+.User .content-user p:hover {
+
+    transform: scale( 1.2 );
+}
+.User p a {
+
+    color: #fff;
+}
+
+.User figure:hover figcaption {
+
+    opacity: 0;
+}
+
+
+.User figcaption {
+    transition: .2s linear all;
+    cursor: default; 
+    position: absolute;
+    top: 0;
+    padding: .25vh .3vh;
+    width: 80%;
+    left: 10%;
+    background: rgba(0,0,0,.85);
+    top: 50%;
+    transform: translateY( -50% );
+    text-align: center;
+    color:#fff;
+    font-weight: 600;
 }

@@ -1,0 +1,64 @@
+.FormAdd {
+
+    background: rgb(32,32,41);
+    color:#fff;
+    padding: 4vh 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.FormAdd button[type="submit"]:hover,
+.FormAdd button[type="submit"]:focus
+{
+
+    opacity: 1;
+    border-radius: 25px 0;
+}
+
+.FormAdd button[type="submit"] {
+
+    opacity: .6;
+    transition: .12s linear all;
+    color: #fff;
+    padding: 1.5vh 3vh;
+    background: rgb( 51,51,51 );
+}
+
+.field-wrap-pseudo label {
+
+    position: relative;
+    transition: .3s linear all;
+    color: rgb( 127,127,127 );
+    font-size: 13px;
+    top: 0;
+    left: 0;
+}
+
+.field-wrap-pseudo input:focus + label.active {
+    opacity: 1!important;
+    top: -9px;
+    left: -3px;
+}
+.field-wrap-pseudo input {
+
+    font-size: 18px;
+    border: none;
+    outline: none;
+}
+
+.field-wrap-pseudo {
+
+    color: #000;
+    background: #fff;
+    padding: 1vh 1.85vh;
+    border: 1px solid #fff;
+}
+
+@media screen and (max-width: 600px), (max-height: 400px) {
+
+    .FormAdd {
+
+        flex-direction: column;
+    }
+}

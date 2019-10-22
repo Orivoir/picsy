@@ -3,9 +3,8 @@ import collections from './core/firebase/firebase';
 import routes from './core/routes';
 import {Switch,Route} from 'react-router-dom';
 
-
 function App() {
-  
+
   return (
     <>
       <Switch>

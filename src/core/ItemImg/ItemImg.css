@@ -5,6 +5,11 @@
     border: 2px solid transparent;
 }
 
+.ItemImg.even {
+
+    flex-direction: row-reverse;
+}
+
 .ItemImg .link-filter {
 
     border: 2px solid transparent;
@@ -24,7 +29,7 @@
     position: absolute;
     background: rgba( 0,0,0,.85 );
     width: 40px;
-    height: 40px;
+    height: 35px;
     transform: scale( 0 );
     transition: .25s linear all;
 }
@@ -37,11 +42,10 @@ figure:hover .fig-picsy {
 .fig-picsy button {
 
     position: relative;
-    left: 5px;
-    top: 5px;
     color: #fff;
+    left: 8px;
     opacity: .65;
-    font-size: 3vh;
+    font-size: 22px;
     transition: .1s ease-in-out all;
 }
 

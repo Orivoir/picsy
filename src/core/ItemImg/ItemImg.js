@@ -1,12 +1,12 @@
 import React,{useState} from 'react';
 import ImgFilter from './../ImgFilter/ImgFilter';
 import {HashLink as Link} from 'react-router-hash-link';
-import ControlImg from './../ControlImg/ControlImg';
+import ControlItem from './../ControlItem/ControlItem';
 import Loader from './../Loader/Loader';
 import Notif from './../Notif/Notif';
 import './ItemImg.css';
 
-function ItemImg({item,db}) {
+function ItemImg({item,db,even}) {
 
     const [control,setControl] = useState( false );
     const [visible,setVisible] = useState( true );
@@ -21,7 +21,7 @@ function ItemImg({item,db}) {
                 <li
                 onMouseEnter={() => btnNav.current.classList.remove('hide')}
                 onMouseLeave={() => btnNav.current.classList.add('hide')}
-                className={`ItemImg ${visible ? '':'hide'}`}
+                className={`ItemImg ${visible ? '':'hide'} ${even ? 'even':''}`}
             >
                 <Link
                     className="link-filter"
@@ -64,7 +64,9 @@ function ItemImg({item,db}) {
                     />
                 </Link>
 
-                <ControlImg
+                <ControlItem
+                    closer
+                    itemType="image"
                     onRemove={() => {
                         db.removePicture( item.id ).then( () => {
                             setVisible( false );   

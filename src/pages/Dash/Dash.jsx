@@ -2,8 +2,9 @@ import React from 'react';
 import Loader from './../../core/Loader/Loader';
 import {Redirect} from 'react-router-dom';
 import User from './../../core/User/User';
-import ListAlbulms from './../../core/ListAlbulms/ListAlbulms';
+import ListAlbums from '../../core/ListAlbulms/ListAlbums';
 import {HashLink as Link} from 'react-router-hash-link';
+import './Dash.css';
 
 export default class Dash extends React.Component {
 
@@ -21,7 +22,6 @@ export default class Dash extends React.Component {
     constructor( props ) {
 
         super( props ) ;
-
         this.userID = localStorage.getItem('userID');
     }
 
@@ -75,7 +75,7 @@ export default class Dash extends React.Component {
 
         return(
             <section
-                className="dash"
+                className="Dash"
             >
                 {redirect}
 
@@ -85,13 +85,13 @@ export default class Dash extends React.Component {
                 />
 
                  
-                <ListAlbulms
+                <ListAlbums
                     db={this.props.db}
                     albums={albums} 
                     load={loader.albums}
                 />
 
-                <aside>
+                <aside className="add-album">
                     <p>
                         <Link
                             to="/add-album"

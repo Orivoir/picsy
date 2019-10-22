@@ -4,6 +4,7 @@ import FormAdd from './../FormAdd/FormAdd';
 import Loader from './../Loader/Loader';
 import Notif from './../Notif/Notif';
 import ListImg from './../ListImg/ListImg';
+import './ShowAlbum.css';
 
 const getPics = (db,id) => {
 
@@ -18,7 +19,7 @@ const getPics = (db,id) => {
     } ) ;
 }
 
-function ShowAlbum({db}) {
+function ShowAlbum({db,loaderAlbum,album}) {
     
     const {id} = useParams();
     const [loaderAddPicture,setLoaderAddPicture] = useState( false );
@@ -34,8 +35,14 @@ function ShowAlbum({db}) {
     });
 
     return (
-        <>
-
+        <section className="ShowAlbum">
+            {
+                !loaderAlbum && (
+                    <h2>
+                        {album.get('name')}
+                    </h2>
+                )
+            }
             <ListImg
                 items={
                     !pictures.pics ?
@@ -112,7 +119,7 @@ function ShowAlbum({db}) {
             />
             {errors.map( error => error )}
 
-        </>
+        </section>
     )
 }
 

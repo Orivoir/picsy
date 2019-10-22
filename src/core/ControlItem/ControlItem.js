@@ -1,8 +1,8 @@
 import React,{useState,useEffect} from 'react';
 import Confirm from './../Confirm/Confirm';
-import './ControlImg.css';
+import './ControlItem.css';
 
-function ControlImg({
+function ControlItem({
     manualOpen,
     open,
     onClose,
@@ -11,7 +11,9 @@ function ControlImg({
     loadRname,
     pic,
     errorsRname,
-    onOpen
+    onOpen,
+    itemType,
+    closer
 }) {
 
     const [confirm,setConfirm] = useState(false);
@@ -23,15 +25,16 @@ function ControlImg({
     useEffect( () => {
 
         if( open && !confirm )
-            setTimeout(() => (
+            setTimeout(() => {
+                if( firstControl.current )
                 firstControl.current.focus()
-            ) , 250);
+            } , 250);
 
     } ) ;
 
     return (
         <ul
-            className={`ControlImg`}
+            className={`ControlItem`}
             onMouseEnter={() => onOpen()}
             onMouseLeave={() => {
                 if( !manualOpen ) {
@@ -40,7 +43,7 @@ function ControlImg({
             }}
         >
             <li
-                className={`${open ? "":"hide"}`}
+                className={`${open && !confirm ? "":"hide"}`}
             >
                 <button
                     onContextMenu={e => e.preventDefault()}
@@ -97,7 +100,7 @@ function ControlImg({
             </li>
 
             <li
-                className={`${open ? "":"hide"}`}
+                className={`${open && !inputRname ? "":"hide"}`}
             >
                 {
 
@@ -110,11 +113,11 @@ function ControlImg({
                                             onRemove();
                                         }}
                                         onFinally={() => setConfirm( false )}
-                                        text={`êtes vous sur de vouloir supprimez l'image ${pic.get('name')}`}
+                                        text={`êtes vous sur de vouloir supprimez l'${itemType} ${pic.get('name')}`}
                                         textConfirm="oui"
                                         textCancel="non"
                                         className="confirm-remove confirm-remove-picture"
-                                        title="Suppréssion"
+                                        // title="Suppréssion"
                                         icons
                                         autoFocus
                                 />
@@ -126,8 +129,8 @@ function ControlImg({
                 }
             </li>
 
-            <li    
-                className={`${open ? "":"hide"}`}
+            <li
+                className={`${open && !inputRname && closer && !confirm ? "":"hide"}`}
             >
                 <button
                     onClick={() => onClose instanceof Function ? onClose(): null}
@@ -139,4 +142,4 @@ function ControlImg({
     ) ;
 }
 
-export default ControlImg;
+export default ControlItem;

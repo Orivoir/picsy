@@ -11,6 +11,7 @@ function assoceIconType( type ) {
         ,'success': 'fas fa-check-circle'
         ,'bug': 'fas fa-bug'
         , 'mask': 'fas fa-mask'
+        , 'back': 'fas fa-hand-point-left'
     } ;
 
     return assoc[ type ] || assoc['mask'] ;

@@ -14,11 +14,12 @@ function ListImg( {
         >
             {
                 load || (
-                    items.map( item => (
+                    items.map( (item,key) => (
                         <ItemImg
                             key={item.id}
                             item={item}
-                            db={db} 
+                            db={db}
+                            even={!!(key%2)}
                         />
                     ) )
                 )

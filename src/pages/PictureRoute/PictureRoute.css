@@ -1,0 +1,35 @@
+.PictureRoute aside figure ,
+.PictureRoute aside figure img {
+
+    display: block;
+    width: 85%;
+    height: auto;
+    margin: auto;
+    min-width: 300px;
+}
+
+.fig-filter {
+
+    position: absolute;
+    width: 85%;
+    left: calc(15% / 2);
+    background: rgba( 255,255,255,.85 );
+    padding: 4vh 0;
+    text-align: center;
+    opacity: 0;
+    font-size: 5vh;
+    letter-spacing: .95vh;
+    cursor: default;
+    z-index: 250;
+    transition: .25s linear all; 
+}
+
+.fig-filter:hover {
+
+    opacity: 0!important;
+}
+
+figure:hover .fig-filter {
+
+    opacity: 1;
+}

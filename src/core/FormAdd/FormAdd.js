@@ -2,10 +2,11 @@ import React,{useState,useEffect} from 'react';
 import InputFile from './../InputFile/InputFile';
 import Notif from './../Notif/Notif';
 import './FormAdd.css';
+import ReactTooltip from 'react-tooltip';
 
 function FormAdd({type,onSubmit,load,className,voidForm}){
 
-    const [picture,setPicture] = useState("");
+    const [picture,setPicture] = useState("https://image0.flaticon.com/icons/png/128/189/189334.png");
     const [errors,setErrors] = useState([]);
     const [name,setName] = useState("");
     const [refName] = useState( React.createRef() );
@@ -19,7 +20,8 @@ function FormAdd({type,onSubmit,load,className,voidForm}){
     } ) ;
 
     return (
-        <form
+        <>
+            <form
             className={`FormAdd ${className}`}
             onSubmit={e => {
                 e.preventDefault();
@@ -37,14 +39,21 @@ function FormAdd({type,onSubmit,load,className,voidForm}){
             }}
         >
 
-            <label htmlFor="name">nom</label>
-            <input
-                ref={refName}
-                type="text"
-                placeholder={`nom de l'${!/album/i.test(type) ? 'image':'album' }`}
-                autoComplete="off"
-                onChange={({target}) => setName( target.value ) }
-            />
+            <div className="field-wrap-pseudo">
+                <input
+                    ref={refName}
+                    type="text"
+                    placeholder={`nom de l'${!/album/i.test(type) ? 'image':'album' }`}
+                    autoComplete="off"
+                    onChange={({target}) => setName( target.value ) }
+                />
+                <label 
+                    htmlFor="name"
+                    className={`${!!name.length ? 'active':'o-hide'}`}
+                >
+                    nom d'{!/album/i.test(type) ? 'image':'album' }
+                </label>
+            </div>
 
             {
                 !/album/i.test(type) ?
@@ -52,13 +61,38 @@ function FormAdd({type,onSubmit,load,className,voidForm}){
                     className="hide"
                     name="picture"
                     label={
-                        <figure>
-                            <img
-                                src={picture}
-                                alt="ajouté"
-                                width={64}
+                        <>
+                        <ReactTooltip
+                                id="add-picture"
+                                type="info"
+                                getContent={()=> (
+                                    <p style={{
+                                        fontSize: "16px"
+                                        ,margin: 0
+                                    }}>
+                                        <i className="fas fa-info-circle"></i>
+                                        &nbsp;ajouté une image
+                                    </p>
+                                )}    
+                                effect="solid"
+                                place="top"
                             />
-                        </figure>
+                            <figure
+                                data-tip="ajouté une image"
+                                data-for="add-picture"
+                            >
+                                <button
+                                    type="button"
+                                    onClick={e =>  e.target.parentNode.click()}
+                                >
+                                    <img
+                                        src={picture}
+                                        alt="ajouté"
+                                        width={64}
+                                    />
+                                </button>
+                            </figure>
+                        </>
                     }
                     autoRead
                     onChange={(file,blob,e) => {
@@ -75,7 +109,8 @@ function FormAdd({type,onSubmit,load,className,voidForm}){
                             ;
                             
                             setErrors( [...errors , 
-                                <Notif 
+                                <Notif
+                                    key={Date.now()} 
                                     type="error"
                                     text={mssg}
                                     onClose={({remove}) => remove()}
@@ -88,6 +123,7 @@ function FormAdd({type,onSubmit,load,className,voidForm}){
             }
 
             <button
+                type='submit'
                 disabled={!!load}
             >
                 {
@@ -101,6 +137,8 @@ function FormAdd({type,onSubmit,load,className,voidForm}){
             </button>
 
         </form>
+        {errors.map( error => error )}
+      </>
     );
 }
 

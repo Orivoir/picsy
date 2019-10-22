@@ -10,13 +10,37 @@ const buildFilter = filters => {
     filters.forEach( filter => {
 
         try {
-            const f = JSON.parse( filter ) ;
 
-            styles += `${f.property}(${f.val}) `;
+            let f = null;
 
+            if( typeof filter === 'string' ) {
+
+                f = JSON.parse( filter ) ;
+            } else {
+                f = filter;
+            }
+
+            if( !(f.key && f.val) ) return;
+            
+            if( /%/.test(f.val) && /hue/.test(f.key) ) {
+                f.val = f.val.replace('%' , 'deg' );
+            }
+
+            if( 
+
+                f.key === 'hueRotate'
+                ) {
+                 f.key = 'hue-rotate';
+                 
+             }
+
+            styles += `${f.key}(${f.val}) `;
+            
         } catch( SyntaxError ) {/* Silence is <feature /> */}
-
+        
     } ) ;
+
+    console.log( styles );
 
     return styles;
 } ;
