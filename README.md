@@ -9,6 +9,7 @@
 - css of form filter ( 1hours ) **❌**
 - add reactTooltip of icons and links ( 1/2hours) **❌**
 - minimified component ( 4-5hours ) **❌**
+- define the document titles ( 1/5 hours ) **❌**
 
 ### deploy version **0.2.0-beta** 
 #### *25/10/2019 - 26/10/2019*
