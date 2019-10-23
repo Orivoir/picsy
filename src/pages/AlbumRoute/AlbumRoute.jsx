@@ -29,6 +29,8 @@ export default class AlbumRoute extends React.Component {
         super( props );
         this.userID = localStorage.getItem('userID') || docCookies.getItem('userID');
 
+        document.title = 'Picsy | Album' ;
+
         if( this.props.action !== AlbumRoute.add() ) {
             
             this.props.db.albums.doc( document.location.hash.split('/').pop() )

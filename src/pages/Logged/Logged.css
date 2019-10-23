@@ -1,5 +1,7 @@
 .Logged {
 
+    background-image: url('./bg.jpg');
+    background-size: cover;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -21,39 +23,16 @@
     justify-content: space-around;
 }
 
-.sign-in a:hover {
-
-    color: #fff;
-}
-
-.sign-in a:hover::before {
-
-    transform: scaleX( 1 );
-}
-
-.sign-in a::before {
-
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 3px;
-    top: 100%;
-    transform: scaleX( 0 );
-    background: rgb(134, 102, 20); 
-    transition: .25s linear all;
-}
-
 .Logged .sign-in a {
 
-    position: relative;
-    transition: .25s linear all;
-    text-decoration: none;
-    color: rgb( 200,200,200 );
+    display: inline-block;
+    margin-left: 6px;
 }
 
 .Logged .sign-in {
 
     text-align: center;
+    letter-spacing: 0rem;
 }
 
 .Logged form figure {

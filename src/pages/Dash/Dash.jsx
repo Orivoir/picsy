@@ -2,6 +2,7 @@ import React from 'react';
 import Loader from './../../core/Loader/Loader';
 import {Redirect} from 'react-router-dom';
 import User from './../../core/User/User';
+import ReactTooltip from 'react-tooltip';
 import ListAlbums from '../../core/ListAlbulms/ListAlbums';
 import {HashLink as Link} from 'react-router-hash-link';
 import './Dash.css';
@@ -23,13 +24,14 @@ export default class Dash extends React.Component {
 
         super( props ) ;
         this.userID = localStorage.getItem('userID');
+
+        document.title = 'Picsy | Dash';
     }
 
     componentDidMount() {
 
         if( !this.userID ) {
             this.setState( {
-                loader: {u: false, albums: false},
                 redirect: <Redirect to="/" /> 
             } ) ;
         } else {
@@ -91,9 +93,25 @@ export default class Dash extends React.Component {
                     load={loader.albums}
                 />
 
+                <ReactTooltip
+                    id="add-album"
+                    type="info"
+                    getContent={()=> (
+                        <p style={{
+                            fontSize: "16px"
+                        }}>
+                            <i className="fas fa-info-circle"></i>
+                            &nbsp;créé un album
+                        </p>
+                    )} 
+                    effect="solid"
+                    place="top"
+                />
                 <aside className="add-album">
                     <p>
                         <Link
+                            data-for="add-album"
+                            data-tip="créé un album"
                             to="/add-album"
                         >
                             <i className="fas fa-folder-plus"></i>

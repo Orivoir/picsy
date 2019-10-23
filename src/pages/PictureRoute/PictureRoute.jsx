@@ -31,6 +31,7 @@ export default class PictureRoute extends React.Component {
         this.userID = localStorage.getItem('userID') || docCookies.getItem('userID');
         this.updatePicture = this.updatePicture.bind( this );
         this.timeUpdateUp = this.timeUpdateUp.bind( this );
+        document.title = 'Picsy | filtre';
     }
 
     componentWillUnmount() {

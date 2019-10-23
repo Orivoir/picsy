@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import Confirm from './../Confirm/Confirm';
 import './ControlItem.css';
+import ReactToolTip from 'react-tooltip';
 
 function ControlItem({
     manualOpen,
@@ -45,7 +46,24 @@ function ControlItem({
             <li
                 className={`${open && !confirm ? "":"hide"}`}
             >
+                
+                <ReactToolTip 
+                    id="rname"
+                    type="info"
+                    getContent={()=> (
+                        <p style={{
+                            fontSize: "16px"
+                        }}>
+                            <i className="fas fa-info-circle"></i>
+                            &nbsp;renomé l'{itemType !== 'album' ? 'image': 'album'}
+                        </p>
+                    )} 
+                    effect="solid"
+                    place="top"
+                />
                 <button
+                    data-for="rname"
+                    data-tip="renomé"
                     onContextMenu={e => e.preventDefault()}
                     ref={firstControl}
                     className={`${inputRname ? 'hide':''}`}
@@ -105,26 +123,44 @@ function ControlItem({
                 {
 
                     confirm || (
-                        <button
-                            onClick={() =>
-                                setConfirm(
-                                    <Confirm
-                                        onConfirm={() => {
-                                            onRemove();
-                                        }}
-                                        onFinally={() => setConfirm( false )}
-                                        text={`êtes vous sur de vouloir supprimez l'${itemType} ${pic.get('name')}`}
-                                        textConfirm="oui"
-                                        textCancel="non"
-                                        className="confirm-remove confirm-remove-picture"
-                                        // title="Suppréssion"
-                                        icons
-                                        autoFocus
-                                />
-                            )}
-                        >
-                            <i className="fas fa-trash"></i>
-                        </button>       
+                        <>
+                            <ReactToolTip 
+                                id="remove"
+                                type="info"
+                                getContent={()=> (
+                                    <p style={{
+                                        fontSize: "16px"
+                                    }}>
+                                        <i className="fas fa-info-circle"></i>
+                                        &nbsp;supprimé l'{itemType !== 'album' ? 'image': 'album'}
+                                    </p>
+                                )} 
+                                effect="solid"
+                                place="top"
+                            />
+                            <button
+                                data-tip="supprimé"
+                                data-for="remove"
+                                onClick={() =>
+                                    setConfirm(
+                                        <Confirm
+                                            onConfirm={() => {
+                                                onRemove();
+                                            }}
+                                            onFinally={() => setConfirm( false )}
+                                            text={`êtes vous sur de vouloir supprimez l'${itemType} ${pic.get('name')}`}
+                                            textConfirm="oui"
+                                            textCancel="non"
+                                            className="confirm-remove confirm-remove-picture"
+                                            // title="Suppréssion"
+                                            icons
+                                            autoFocus
+                                    />
+                                )}
+                            >
+                                <i className="fas fa-trash"></i>
+                            </button>
+                        </>       
                     )
                 }
             </li>
@@ -132,7 +168,24 @@ function ControlItem({
             <li
                 className={`${open && !inputRname && closer && !confirm ? "":"hide"}`}
             >
+                
+                <ReactToolTip 
+                    id="close"
+                    type="info"
+                    getContent={()=> (
+                        <p style={{
+                            fontSize: "16px"
+                        }}>
+                            <i className="fas fa-info-circle"></i>
+                            &nbsp;fermé le menu
+                        </p>
+                    )} 
+                    effect="solid"
+                    place="top"
+                />
                 <button
+                    data-for="close"
+                    data-tip="fermé le menu"
                     onClick={() => onClose instanceof Function ? onClose(): null}
                 >
                     <i className="fas fa-times"></i>

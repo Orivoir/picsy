@@ -30,6 +30,8 @@ export default class Logged extends React.Component {
 
         this.avatarChange = this.avatarChange.bind( this ); 
         this.onSubmit = this.onSubmit.bind( this );
+
+        document.title = 'Picsy | Log in';
     }
 
     /**
