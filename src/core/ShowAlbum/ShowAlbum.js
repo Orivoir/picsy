@@ -74,13 +74,6 @@ function ShowAlbum({db,loaderAlbum,album}) {
                             setLoaderAddPicture(false);
 
                             if( success ) {
-
-                                // setErrors( [ <Notif
-                                //     key={Date.now()}
-                                //     text="fichier ajouté avec succés"
-                                //     type="success"
-                                //     onClose={({remove}) => remove()}
-                                // /> ] ) ;
                                 setVoidForm( true );
                                 setTimeout(() => {
                                     setVoidForm( false );

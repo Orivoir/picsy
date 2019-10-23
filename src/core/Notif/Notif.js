@@ -25,11 +25,12 @@ function Notif( {
 } ) {
 
     const [refNotif] = useState( React.createRef() );
+    const [hide,setHide] = useState( false );
 
     return (
         <section
             ref={refNotif}
-            className={`Notif ${className} ${type}`}
+            className={`Notif ${className} ${type} ${hide ? 'hide':''}`}
         >
             <p>
                 <i className={assoceIconType(type)}></i>
@@ -47,9 +48,19 @@ function Notif( {
                                 ref: refNotif
                                 ,notif: refNotif.current
                                 ,remove() {
-                                    refNotif.current.parentNode.removeChild( 
-                                        refNotif.current
-                                    );
+
+                                    if( 
+                                        refNotif.current instanceof Node &&
+                                        refNotif.current.parentNode instanceof Node
+                                    ) {
+                                    
+                                        refNotif.current.parentNode.removeChild( refNotif.current );
+                                        return true;
+                                    }
+                                    return false;
+                                }
+                                ,hide() {
+                                    setHide( true );
                                 }
                             })}
                         >
