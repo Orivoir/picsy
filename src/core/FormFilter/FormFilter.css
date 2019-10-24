@@ -1,0 +1,46 @@
+.FormFilter {
+
+    display: flex;
+    /* flex-direction: column; */
+    /* align-items: center; */
+    justify-content: space-around;
+    flex-wrap: wrap;
+    background: rgb( 45,45,45 );
+    padding: 2.8vh 0;
+}
+
+.FormFilter div label {
+
+    color: rgb( 150,150,150 );
+    text-align: center;
+    text-transform: capitalize;
+    letter-spacing: .16rem;
+    margin-bottom: 2vh; 
+}
+
+.FormFilter div {
+
+    display: flex;
+    flex-direction: column;
+    margin: 2vh 0;
+}
+
+
+.FormFilter div input:focus {
+
+    border-color: #069;
+}
+.FormFilter div input {
+    -webkit-appearance: none;
+    padding: 0;           
+    font: inherit;
+    outline: none;
+    /* color: #069; */
+    opacity: .8;
+    border-radius: 25px;
+    background: #CCC;
+    box-sizing: border-box;
+    transition: opacity .2s;
+    cursor: pointer;
+    border: 2px solid transparent;
+}

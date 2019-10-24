@@ -1,4 +1,5 @@
 import React from 'react';
+import './FormFilter.css'
 
 export default class FormFilter extends React.Component {
 
@@ -17,9 +18,11 @@ export default class FormFilter extends React.Component {
             <>
                 {
                     load || (
-                        <form>
+                        <form
+                            className="FormFilter"
+                        >
                             <div>
-                                <label>flootage {blurValue || 0}%</label>
+                                <label>flootage <i>{blurValue || 0}%</i></label>
                                 <input
                                     type="range"
                                     min="0"
@@ -36,7 +39,7 @@ export default class FormFilter extends React.Component {
                                 />
                             </div>
                             <div>
-                                <label>contraste {(contrastValue || contrastValue === 0) ? contrastValue : 100}%</label>
+                                <label>contraste <i>{(contrastValue || contrastValue === 0) ? contrastValue : 100}%</i></label>
                                 <input
                                     type="range"
                                     min="0"
@@ -53,7 +56,7 @@ export default class FormFilter extends React.Component {
                                 />
                             </div>
                             <div>
-                                <label>grisage {grayscaleValue || 0}%</label>
+                                <label>grisage <i>{grayscaleValue || 0}%</i></label>
                                 <input
                                     type="range"
                                     min="0"
@@ -70,7 +73,7 @@ export default class FormFilter extends React.Component {
                                 />
                             </div>
                             <div>
-                                <label>??? {hueRotate || 0} degrés</label>
+                                <label>rotation teinte <i>{hueRotate || 0}°</i></label>
                                 <input
                                     type="range"
                                     min="-8000"

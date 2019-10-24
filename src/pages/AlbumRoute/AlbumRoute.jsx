@@ -27,7 +27,7 @@ export default class AlbumRoute extends React.Component {
     constructor(props) {
 
         super( props );
-        this.userID = localStorage.getItem('userID') || docCookies.getItem('userID');
+        this.userID = localStorage.getItem('useID') || docCookies.getItem('useID');
 
         document.title = 'Picsy | Album' ;
 

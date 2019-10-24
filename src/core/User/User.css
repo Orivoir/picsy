@@ -30,15 +30,15 @@
 .User figure{
 
     margin: 0;
-    margin-right: 6.2%;
     position: relative;
 }
+
 
 .User p {
 
     font-size: 3.6vh;
     transition: .13s linear all;
-    margin: 0;
+    margin: 0 7vh;
 }
 
 

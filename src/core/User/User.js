@@ -49,6 +49,31 @@ function User({u,load}) {
                                     <i className="fas fa-user-plus"></i>
                                 </Link>
                             </p>
+
+                            
+                            <ReactToolTip 
+                                id="change"
+                                type="info"
+                                getContent={()=> (
+                                    <p style={{
+                                        fontSize: "16px"
+                                    }}>
+                                        <i className="fas fa-info-circle"></i>
+                                        &nbsp;changé de compte
+                                    </p>
+                                )} 
+                                effect="solid"
+                                place="bottom"
+                            />
+
+                            <p
+                                data-for="change"
+                                data-tip="changer de compte"
+                            >
+                                <Link to="/account-list">
+                                    <i class="fas fa-person-booth"></i>
+                                </Link>
+                            </p>
                         </div>
                         <SignIn />
                     </>

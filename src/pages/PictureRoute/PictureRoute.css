@@ -33,3 +33,36 @@ figure:hover .fig-filter {
 
     opacity: 1;
 }
+
+
+
+.update-pic button:hover {
+
+    background: rgb( 185,185,185 );
+    color: #000;
+}
+
+.update-pic button {
+
+    transition: .25s linear all;
+    color: rgb( 185,185,185 );
+    padding: 1.3vh 2.5vh;
+    border-color: rgb( 185,185,185 );
+    border-radius: 25px 0;
+    letter-spacing: .13rem;
+}
+
+.update-pic {
+
+    letter-spacing: .14rem;
+    background :red;
+    margin: 0;
+    margin-top: 2vh;
+    padding: 3vh 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: rgb( 92,92,92 );
+    color: rgb( 185,185,185 );
+    font-weight: 600;
+}

@@ -3,7 +3,9 @@ import ImgFilter from './../../core/ImgFilter/ImgFilter';
 import Loader from './../../core/Loader/Loader';
 import User from './../../core/User/User';
 import {Redirect} from 'react-router-dom';
+import {HashLink as Link} from 'react-router-hash-link';
 import FormFilter from './../../core/FormFilter/FormFilter';
+import Notif from './../../core/Notif/Notif';
 import docCookies from 'doc-cookies';
 import './PictureRoute.css';
 
@@ -28,7 +30,7 @@ export default class PictureRoute extends React.Component {
         super( props );
 
         this.pictureID = document.location.hash.split('/').pop() ;
-        this.userID = localStorage.getItem('userID') || docCookies.getItem('userID');
+        this.userID = localStorage.getItem('useID') || docCookies.getItem('useID');
         this.updatePicture = this.updatePicture.bind( this );
         this.timeUpdateUp = this.timeUpdateUp.bind( this );
         document.title = 'Picsy | filtre';
@@ -181,6 +183,15 @@ export default class PictureRoute extends React.Component {
                     />
                 </header>
 
+                <Notif
+                    type="back"
+                    text={(
+                        <Link to="/dash">
+                            tableau de bord
+                        </Link>
+                    )}
+                />
+
                 <aside>
                     <ImgFilter
                         load={loaderImg}
@@ -202,7 +213,7 @@ export default class PictureRoute extends React.Component {
                     />
                 </aside>
 
-                <p>
+                <p className="update-pic">
                     {
                         !loaderForm && (
                             <>

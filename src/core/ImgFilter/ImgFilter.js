@@ -39,9 +39,6 @@ const buildFilter = filters => {
         } catch( SyntaxError ) {/* Silence is <feature /> */}
         
     } ) ;
-
-    console.log( styles );
-
     return styles;
 } ;
 

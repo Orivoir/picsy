@@ -1,6 +1,7 @@
 import React from 'react';
 import Loader from './../../core/Loader/Loader';
 import {Redirect} from 'react-router-dom';
+import docCookies from 'doc-cookies';
 import User from './../../core/User/User';
 import ReactTooltip from 'react-tooltip';
 import ListAlbums from '../../core/ListAlbulms/ListAlbums';
@@ -23,7 +24,7 @@ export default class Dash extends React.Component {
     constructor( props ) {
 
         super( props ) ;
-        this.userID = localStorage.getItem('userID');
+        this.userID = localStorage.getItem('useID') || docCookies.getItem('useID') ;
 
         document.title = 'Picsy | Dash';
     }

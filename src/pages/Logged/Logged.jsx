@@ -2,9 +2,8 @@ import React from 'react';
 import Loader from './../../core/Loader/Loader';
 import {Redirect} from 'react-router-dom';
 import docCookies from 'doc-cookies';
-import InputFile from './../../core/InputFile/InputFile';
 import Notif from './../../core/Notif/Notif';
-import SignIn from './../../core/SignIn/SignIn';
+import FormUser from './../../core/FormUser/FormUser';
 import './Logged.css' ;
 
 export default class Logged extends React.Component {
@@ -28,7 +27,14 @@ export default class Logged extends React.Component {
 
         this.userID = localStorage.getItem('userID') || docCookies.getItem('userID');
 
-        this.avatarChange = this.avatarChange.bind( this ); 
+        try {
+
+            this.userID = JSON.parse( this.userID ) ;
+        } catch( SyntaxError ) {
+            this.userID = [];
+        }
+
+        this.avatarChange = this.avatarChange.bind( this );
         this.onSubmit = this.onSubmit.bind( this );
 
         document.title = 'Picsy | Log in';
@@ -61,7 +67,7 @@ export default class Logged extends React.Component {
             const {avatar} = this.state;
 
             this.setState( {
-                loaderButton: <Loader width={16} type="btn" />                
+                loaderButton: <Loader width={16} type="btn" />
             } , () => {
 
                 this.props.db.users.add( {
@@ -69,15 +75,17 @@ export default class Logged extends React.Component {
                     ,avatar: avatar
                 } ).then( data => {
 
-                    const userID = data.id ;
+                    if( !this.userID )
+                        this.userID = [];
 
-                    localStorage.setItem('userID' , userID);
-                    docCookies.setItem('userID' , userID );
+                    this.userID.push(data.id);
 
+                    localStorage.setItem('userID' , JSON.stringify( this.userID ) );
+                    docCookies.setItem('userID' , JSON.stringify( this.userID ) , new Date( ( Date.now() * 1.5 ) ) );
                     this.setState( {
-                        redirect: <Redirect to="/dash" />
+                        redirect: <Redirect to="/account-list" />
                     } ) ;
-                } )
+                } ) ;
             } ) ;
         }
     }
@@ -114,28 +122,30 @@ export default class Logged extends React.Component {
 
     componentDidMount() {
 
-        if( !this.userID ) {
-
+        if( !this.userID || !this.userID.length ) {
             this.setState( {
                 loader: false 
             } ) ;
         } else {
-
-            
-            this.props.db.getUser(this.userID)
-            .then( user => {
-
-                if( user ) {
-                    this.setState( {
-                        redirect: <Redirect to="/dash" />
-                    } ) ;
-                    
-                } else {
-                    this.setState( {
-                        loader: false
-                    } ) ;
-                }
+            this.setState( {
+                redirect: <Redirect to="/account-list" />
             } ) ;
+            console.log('SHOW ACCOUNT LIST');
+            
+            // this.props.db.getUser(this.userID)
+            // .then( user => {
+
+            //     if( user ) {
+            //         this.setState( {
+            //             redirect: <Redirect to="/dash" />
+            //         } ) ;
+                    
+            //     } else {
+            //         this.setState( {
+            //             loader: false
+            //         } ) ;
+            //     }
+            // } ) ;
             
         }
     }
@@ -158,78 +168,20 @@ export default class Logged extends React.Component {
                 {loader}
                 {redirect}
 
-                <form
+                <FormUser
                     onSubmit={this.onSubmit}
-                >
-                    <section>
-                        <div className="field-wrap-pseudo">
-                            <input
-                                placeholder="pseudo"
-                                type="text" 
-                                name="pseudo"
-                                autoComplete="off" 
-                                onChange={e => (
-                                    this.setState({pseudo:e.target.value.trim()})
-                                )}
-                                value={this.state.pseudo}
-                            />
-                            <label htmlFor="pseudo" className={`o-hide ${this.state.pseudo.trim().length ? 'active':''}`}>pseudo</label>
-                        </div>
-                        
-                        <div>
-                            <InputFile
-                                className="hide"
-                                label={
-                                    <>
-                                        <span className="hide micro-system">
-                                            {
-                                                fileName ?
-                                                    fileName.length > 7 ?
-                                                    fileName.slice( 0 , 7 ) + ' ...' :
-                                                    fileName :
-                                                    'avatar'
-                                            }
-                                        </span>
-                                        <figure>
-                                            <button 
-                                                type="button"
-                                                onClick={e => {
-                                                    e.target.parentNode.click();
-                                                }}
-                                            >
-                                                <img
-                                                    src={avatar}
-                                                    alt="avatar"
-                                                    width={64}
-                                                />
-                                            </button>
-                                            <figcaption>
-                                                changer
-                                            </figcaption>
-                                        </figure>
-                                    </>
-                                }
-                                name="avatar"
-                                autoRead
-                                onChange={(file,blob,e) => (
-                                    this.avatarChange(file,blob,e)
-                                ) }
-                            />
-                        </div>
-
-                        <button type="submit">
-                            {loaderButton || 'suivant'}
-                        </button>
-                    </section>
-
-                    
-                    <SignIn />
-
-                    {errors.map( error => (
-                            error
-                    ) )}
-
-                </form>
+                    onChangePseudo={e => (
+                        this.setState({pseudo:e.target.value.trim()})
+                    )}
+                    avatar={avatar}
+                    valuePseudo={this.state.pseudo}
+                    fileName={fileName}
+                    errors={errors}
+                    loaderSubmit={loaderButton}
+                    onChangeAvatar={(file,blob,e) => (
+                        this.avatarChange(file,blob,e)
+                    )}
+                />
 
                 <section className="banner-sm-screen hide">
 

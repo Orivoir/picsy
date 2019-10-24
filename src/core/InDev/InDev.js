@@ -2,7 +2,11 @@ import React from 'react';
 import Notif from './../../core/Notif/Notif';
 import {HashLink as Link} from 'react-router-hash-link';
 
-function InDev() {
+function InDev({
+    featureText
+    ,inDays
+    ,constraint
+}) {
 
     return (
         <>
@@ -12,7 +16,7 @@ function InDev() {
                     ,fontWeight: 600 
                 }}
             >
-                La fonctionnalité d'ajout de compte et actuellement en développement<br />
+                La fonctionnalité {featureText || 'inconnue'} et actuellement en développement<br />
                 vous pouvez contribuez à&nbsp;
                 <a 
                     href="https://github.com/Orivoir/picsy"
@@ -39,7 +43,7 @@ function InDev() {
                 type="infos"
                 text={(
                     <>
-                        cette fonctionnalité sera disponible dans 3 jours ( en gros )
+                        cette fonctionnalité sera disponible dans {inDays || 3} jours {constraint ? "( en gros )" : ""}
                     </>
                 )}
             />

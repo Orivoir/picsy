@@ -1,4 +1,5 @@
 import React,{useState} from 'react';
+import ReactToolTip from 'react-tooltip';
 import ImgFilter from './../ImgFilter/ImgFilter';
 import {HashLink as Link} from 'react-router-hash-link';
 import ControlItem from './../ControlItem/ControlItem';
@@ -39,12 +40,30 @@ function ItemImg({item,db,even}) {
                         }
                     }}
                 >
+                    <ReactToolTip 
+                        id="nav"
+                        type="info"
+                        getContent={()=> (
+                            <span style={{
+                                fontSize: "16px"
+                            }}>
+                                <i className="fas fa-info-circle"></i>
+                                &nbsp; {!control ? 'ouvrir':'fermer'} menu
+                            </span>
+                        )} 
+                        effect="solid"
+                        place="top"
+                    />
                     <ImgFilter
                         pics={item}
                         figcaption={
                             <div
+                                
+                                data-for="nav"
+                                data-tip="menu"
                                 className="status-control"
                             >
+
                                 <button
                                     ref={btnNav}
                                     className="hide"
@@ -56,7 +75,7 @@ function ItemImg({item,db,even}) {
                                         setControl(!control);
                                     }}
                                 >
-                                    <i class={!control ? "fas fa-ellipsis-v":"fas fa-times"}></i>
+                                    <i className={!control ? "fas fa-ellipsis-v":"fas fa-times"}></i>
                                 </button>
                             </div>
                         }

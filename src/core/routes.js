@@ -2,7 +2,8 @@ import Logged from './../pages/Logged/Logged';
 import Dash from './../pages/Dash/Dash';
 import AlbumRoute from './../pages/AlbumRoute/AlbumRoute';
 import PictureRoute from './../pages/PictureRoute/PictureRoute';
-import ChangeUser from './../pages/ChangeUser/ChangeUser';
+import AccountList from './../pages/AccountList/AccountList';
+import AddAccount from './../pages/AddAccount/AddAccount';
 
 const routes = [
     {
@@ -52,12 +53,20 @@ const routes = [
     {
         id:6,
         exact:false,
-        render: ChangeUser,
+        render: AddAccount,
         props: {
             action: "filter"
         },
         path: "/add-account",
         name: "filter album"
+    }
+    ,{
+        id:6,
+        exact:false,
+        render: AccountList,
+        props: {},
+        path: "/account-list",
+        name: "liste compte"
     }
 ] ;
 
