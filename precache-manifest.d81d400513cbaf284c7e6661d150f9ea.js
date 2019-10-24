@@ -1,23 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "18a83e623038f19a59c38fe76b36e353",
+    "revision": "f2036dea93d6fa22311ace49f9c236e9",
     "url": "/picsy/index.html"
   },
   {
-    "revision": "801813124f8ec7bc790a",
-    "url": "/picsy/static/css/main.460c98ca.chunk.css"
+    "revision": "1e88a2a744120f0fe6b8",
+    "url": "/picsy/static/css/main.dea7f071.chunk.css"
   },
   {
-    "revision": "654d6f8c8603970e9bcd",
-    "url": "/picsy/static/js/2.a62a388b.chunk.js"
+    "revision": "46b415a94606d254442d",
+    "url": "/picsy/static/js/2.7ea077f3.chunk.js"
   },
   {
-    "revision": "801813124f8ec7bc790a",
-    "url": "/picsy/static/js/main.a404ca7b.chunk.js"
+    "revision": "1e88a2a744120f0fe6b8",
+    "url": "/picsy/static/js/main.a1e7b5a3.chunk.js"
   },
   {
     "revision": "5ae2d8438d885d38ffa4",
     "url": "/picsy/static/js/runtime-main.7a6ef1b2.js"
+  },
+  {
+    "revision": "9a1257117f89f6d5718d7a988df157d2",
+    "url": "/picsy/static/media/bg.9a125711.jpg"
   },
   {
     "revision": "df696f6829946af3abc093897fc49c1d",
