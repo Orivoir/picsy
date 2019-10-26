@@ -18,6 +18,28 @@ const
             .catch( err => reject( err ) )
         ) ) ;
     }
+    ,isLogged( userID ) {
+
+      return new Promise( (resolve,reject) => {
+
+        if( !userID ) return reject();
+
+          this.getUser( userID )
+            .then( user => {
+
+              if( user ) {
+
+                return resolve( {success: true ,user: user} ) ;
+              } else {
+                
+                return resolve( {success: false} ) ;
+              }
+            } )
+            .catch( err => reject(err) )
+          ;
+      } );
+
+    }
     ,pictureSetFilters( pictureID , filters ) {
 
       return new Promise( (resolve , reject) => {
@@ -173,6 +195,8 @@ const
 
         refAlbum.get().then( album => {
 
+          if( !album.get('createAt') ) return reject( { partial: album } );
+
           refAlbum.set( {
             createAt: album.get('createAt')
             ,name: album.get('name')
@@ -248,8 +272,6 @@ const
                 } ) ;
               } else {
 
-
-
                 this.pictures.add( {
                   album_id: albumID
                   ,blob: picture
@@ -258,7 +280,7 @@ const
                   ,filters: []
                 } ).then( () => {
                   this.albumUp( albumID ).then( () => {
-                    resolve( {success: true} )
+                    resolve( {success: true,id: albumID , name: name , blob: picture } )
                   } ).catch( err => reject( err ) )
                 } )
                 .catch( err => reject( err ) )

@@ -3,9 +3,9 @@ import Loader from './../../core/Loader/Loader';
 import {Redirect} from 'react-router-dom';
 import docCookies from 'doc-cookies';
 import User from './../../core/User/User';
-import ReactTooltip from 'react-tooltip';
+import Icons from './../../core/Icons/Icons';
+import Notif from './../../core/Notif/Notif';
 import ListAlbums from '../../core/ListAlbulms/ListAlbums';
-import {HashLink as Link} from 'react-router-hash-link';
 import './Dash.css';
 
 export default class Dash extends React.Component {
@@ -58,7 +58,6 @@ export default class Dash extends React.Component {
                     
                 } else {
                     this.setState( {
-                        loader: {u: false, albums: false},
                         redirect: <Redirect to="/" />
                     } ) ;
                 }
@@ -93,31 +92,19 @@ export default class Dash extends React.Component {
                     albums={albums} 
                     load={loader.albums}
                 />
-
-                <ReactTooltip
-                    id="add-album"
-                    type="info"
-                    getContent={()=> (
-                        <p style={{
-                            fontSize: "16px"
-                        }}>
-                            <i className="fas fa-info-circle"></i>
-                            &nbsp;créé un album
-                        </p>
-                    )} 
-                    effect="solid"
-                    place="top"
-                />
                 <aside className="add-album">
-                    <p>
-                        <Link
-                            data-for="add-album"
-                            data-tip="créé un album"
-                            to="/add-album"
-                        >
-                            <i className="fas fa-folder-plus"></i>
-                        </Link>
-                    </p>
+                    <Icons
+                        tooltip={(
+                            <Notif
+                                tooltip="add-album"
+                                type="infos"
+                                text="créé un album"
+                                place="top"
+                            />
+                        )}
+                        className="fas fa-folder-plus"
+                        target="/add-album"
+                    />
                 </aside>
 
             </section>

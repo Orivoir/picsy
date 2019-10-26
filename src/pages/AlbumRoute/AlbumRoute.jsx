@@ -27,10 +27,13 @@ export default class AlbumRoute extends React.Component {
     constructor(props) {
 
         super( props );
-        this.userID = localStorage.getItem('useID') || docCookies.getItem('useID');
 
         document.title = 'Picsy | Album' ;
+        this.onSubmit = this.onSubmit.bind( this );
+    }
 
+    componentDidMount() {
+        
         if( this.props.action !== AlbumRoute.add() ) {
             
             this.props.db.albums.doc( document.location.hash.split('/').pop() )
@@ -43,31 +46,86 @@ export default class AlbumRoute extends React.Component {
             } ) ;
         }
 
-        if( !this.userID ) {
-            this.setState( {
-                loader: false,
-                redirect: <Redirect to="/" /> 
-            } ) ;
-        } else {
+        this.userID = localStorage.getItem('useID') || docCookies.getItem('useID');
 
-            this.props.db.getUser( this.userID )
-            .then( user => {
+        const notGetUser = {
+            loader: false,
+            redirect: <Redirect to="/" /> 
+        } ;
 
-                if( user ) {
+        this.props.db.isLogged( this.userID )
+            .then( response => {
+
+                if( response.success ) {
                     this.setState( {
                         loader: false,
-                        user: user
+                        user: response.user
                         ,loadUser: false
                     } );
                 } else {
+                    this.setState( notGetUser ) ;
+                }
+
+            } )
+            .catch( () => (
+                this.setState( notGetUser )
+            ) )
+        ;
+    }
+
+    onSubmit({name,refName}) {
+
+        const {user} = this.state;
+
+        this.setState( {
+            loader: <Loader width={16} type="btn" />
+        } )
+
+        if( name.length >= 2 && name.length <= 42 ) {
+
+            if( refName.current instanceof Node ) {
+
+                refName.current.value = '';
+                refName.current.focus() ;
+            }
+
+            this.props.db.addAlbum(
+                name , user.id
+            ).then( data => {
+
+                if( data.success )
                     this.setState( {
                         loader: false,
-                        redirect: <Redirect to="/" /> 
+                        formHide: true,
+                        errors: [],
+                        createWithName: name
                     } ) ;
-                }
-            });
-
+                else
+                    this.setState( state => ({
+                        loader: false,
+                        errors: [...state.errors , (
+                            <Notif
+                                key={Date.now()}
+                                type="error"
+                                onClose={({remove}) => remove()}
+                                text={`l'album ${name} existe déjà`}
+                            />
+                        )]
+                    } )) ;
+            } ) ;
         }
+        else
+            this.setState( state => ({
+                errors: [...state.errors , (
+                    <Notif
+                        key={Date.now()}
+                        type="error"
+                        text="taille de nom invalide"
+                        onClose={({remove}) => remove()}
+                    />
+                )] ,
+                loader: false
+            }));
     }
 
     render() {
@@ -96,52 +154,9 @@ export default class AlbumRoute extends React.Component {
                                 load={loader}
                                 className={`${formHide ? 'hide':''}`}
                                 type="album"
-                                onSubmit={({name}) => {
-
-                                    this.setState( {
-                                        loader: <Loader width={16} type="btn" />
-                                    } )
-
-                                    if( name.length >= 2 && name.length <= 42 )
-
-                                        this.props.db.addAlbum( 
-                                            name , user.id
-                                        ).then( data => {
-                                                 
-                                            if( data.success )
-                                                this.setState( {
-                                                    loader: false,
-                                                    formHide: true,
-                                                    errors: [],
-                                                    createWithName: name
-                                                } ) ;
-                                            else
-                                                this.setState( state => ({
-                                                    loader: false,
-                                                    errors: [...state.errors , (
-                                                        <Notif
-                                                            key={Date.now()}
-                                                            type="error"
-                                                            onClose={({remove}) => remove()}
-                                                            text={`l'album ${name} existe déjà`}
-                                                        />
-                                                    )]
-                                                } )) ;
-                                        } ) ;
-                                    else
-                                        this.setState( state => ({
-                                            errors: [...state.errors , (
-                                                <Notif
-                                                    key={Date.now()}
-                                                    type="error"
-                                                    text="taille de nom invalide"
-                                                    onClose={({remove}) => remove()}
-                                                />
-                                            )] ,
-                                            loader: false
-                                        }));
-                                }}
+                                onSubmit={this.onSubmit}
                             />
+                            
                             {errors}
                             {
                                 formHide && (
@@ -150,7 +165,7 @@ export default class AlbumRoute extends React.Component {
                                         text={<span>
                                             l'album
                                             &nbsp;<Link
-                                                to={`/`}
+                                                to={`/dash`}
                                             >
                                             {createWithName}
                                             </Link> à été créé avec succés

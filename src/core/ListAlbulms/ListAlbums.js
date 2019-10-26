@@ -18,7 +18,7 @@ function ListAlbums({albums,load,db}) {
                             db={db}
                         />
                     )) : (
-                        <Notif 
+                        <Notif
                             type="infos"
                             text="vous n'avez aucun albums"
                         />

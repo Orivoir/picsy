@@ -47,7 +47,16 @@ export default class AddAccount extends React.Component {
             >
                 {redirect}
 
-                <h1>Ajouté un utilisateur</h1>
+                <h1>
+                    Ajouté
+                    <span className="one-word">&nbsp;un&nbsp;</span>
+                    <span className="user-word">
+                        utlisateur
+                    </span>
+                    &nbsp;<span className="hide account-word">
+                        compte
+                    </span>
+                </h1>
                 <FormUser
                     onSubmit={e => {
 

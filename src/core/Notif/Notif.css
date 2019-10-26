@@ -103,9 +103,25 @@
     animation: animeBack .42s cubic-bezier(0.6, -0.28, 0.425, 0.045) infinite alternate;
 }
 
-.Notif.mask {
-    /* 
-        default Notif
-    */
+@media screen and ( max-width: 600px ) , (max-height: 425px)  {
 
+    .Notif p {
+
+        font-size: 12px;
+        letter-spacing: .09rem;
+    }
+}
+
+@media screen and ( max-width: 485px ) , (max-height: 360px)  {
+
+    .Notif p {
+
+        font-size: 12px;
+        letter-spacing: .09rem;
+    }
+
+    .Notif p i {
+
+        display: none;
+    }
 }

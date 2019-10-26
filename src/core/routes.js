@@ -54,9 +54,7 @@ const routes = [
         id:6,
         exact:false,
         render: AddAccount,
-        props: {
-            action: "filter"
-        },
+        props: {},
         path: "/add-account",
         name: "filter album"
     }

@@ -1,16 +1,12 @@
 # [Picsy](https://orivoir.github.io/picsy)
 
-> TODO for deploy of version **0.2.0-beta** 
+> TODO for deploy of optimizations version **0.2.1-beta**
 
-- check all use ref before caller method/attr in the physical DOM ( 1/2 hours ) **✔️** 
-- define feature *add account* ( 1-2 days ) **✔️**
-- stabilize responsive ( 2hours ) **❌** *repoused with 0.2.1-beta*
-- define an max-age of cookies for long time user session ( 1/2 hours ) **✔️**
-- css of form filter ( 1hours ) **✔️**
-- add reactTooltip of icons and links ( 1/2hours) **✔️**
-- minimified component ( 4-5hours ) **❌** *repoused with 0.2.1-beta*
-- define the document titles ( 1/3 hours ) **✔️️️️️️**
-- add an custom document icon ( 1/3 hours ) **✔️**
+- minimified component ( 5-6hours ) **✔️**
+- stabilize responsive ( 2hours ) **✔️**
+- get account details in **AccountItem** ( 1-2hours ) **✔️** 
+- UX form ( autofocus , auto void input , preview of add image , ...) ( 1-2hours ) **✔️**
+- define an multiple add image with the form add image ( 3-4hours ) **✔️**
 
-### deploy version **0.2.0-beta** 
-#### *25/10/2019 - 26/10/2019*
+### deploy version **0.2.1-beta**
+#### *26/10/2019 - 27/10/2019*

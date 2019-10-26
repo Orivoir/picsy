@@ -30,14 +30,16 @@ export default class PictureRoute extends React.Component {
         super( props );
 
         this.pictureID = document.location.hash.split('/').pop() ;
-        this.userID = localStorage.getItem('useID') || docCookies.getItem('useID');
         this.updatePicture = this.updatePicture.bind( this );
         this.timeUpdateUp = this.timeUpdateUp.bind( this );
         document.title = 'Picsy | filtre';
     }
-
+    
+    /**
+     * @method componentWillUnmount [cyclelife]
+     * @description free intervals alloc
+     */
     componentWillUnmount() {
-
         clearInterval( this.updateID ) ;
         clearInterval( this.timeUpdateID ) ;
     }
@@ -45,7 +47,10 @@ export default class PictureRoute extends React.Component {
     componentDidMount() {
         // check logged
         // get img with id in url
+        // open intervals
         
+        this.userID = localStorage.getItem('useID') || docCookies.getItem('useID') ;
+
         if( !this.userID ) {
             this.setState( {
                 loaderImg: null

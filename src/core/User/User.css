@@ -1,4 +1,4 @@
-.User h1 {
+.User h1 , .User blockquote {
 
     margin: 0;
     text-align: right;
@@ -34,21 +34,22 @@
 }
 
 
-.User p {
+.User span a{
 
+    color: #fff;
+}
+.User .content-user span {
+
+    color: #fff;
     font-size: 3.6vh;
     transition: .13s linear all;
     margin: 0 7vh;
 }
 
 
-.User .content-user p:hover {
+.User .content-user span:hover {
 
     transform: scale( 1.2 );
-}
-.User p a {
-
-    color: #fff;
 }
 
 .User figure:hover figcaption {
@@ -71,4 +72,38 @@
     text-align: center;
     color:#fff;
     font-weight: 600;
+}
+
+@media screen and (max-width: 500px) , (max-height:375px) {
+
+    .User figure img {
+
+        display: inline-block;
+        width: 55px;
+    }
+
+    .User figure {
+
+        overflow: hidden;
+        width: 55px;
+        height: auto;
+        position: sticky;
+    }
+    
+    
+    .User figcaption {
+
+        /* text-align: center; */
+        position: sticky;
+        background: transparent;
+        font-size: .56rem;
+    }
+
+    
+    .User figure:hover figcaption {
+
+        opacity: 1;
+        
+    }
+
 }

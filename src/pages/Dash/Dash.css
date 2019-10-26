@@ -4,35 +4,58 @@
     align-items: center;
     justify-content: center;
 }
-.Dash aside.add-album p a {
+.Dash aside.add-album a {
 
     display: inline-block;
+    transform-origin: bottom left; 
     transition: .11s linear all;
     color:#fff;
 }
-.Dash aside.add-album p a:hover {
+.Dash aside.add-album a:hover {
 
     transform: rotate( -18deg );
 
 }
-.Dash aside.add-album p {
+.Dash aside.add-album {
 
     transition: .12s linear all;
-    background: rgb( 85,85,85 );
     text-align: center;
     font-size: 5.8vh;
+    margin: 0;
 }
 
 .Dash aside.add-album {
-
-    position: fixed;
-    bottom: 0%;
-    width: 100%;
+    
+    background: rgb( 85,85,85 );
 }
 
 .Dash {
 
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    height: auto;
     min-height: 100%;
     background: rgb(225,225,225);
+}
+
+@media screen and (max-width: 1e3px) , (max-height: 550px ) {
+
+    .Dash .content-user {
+
+        justify-content: space-around;
+    }
+
+    .Dash aside.add-album p {
+        margin: 0;
+    }
+    .Dash aside.add-album {
+        
+        position: fixed;
+        margin: 0;
+        width: auto;
+        left: 0;
+        bottom: 0;
+        padding: 1vh 2.85vh;
+    }
 }

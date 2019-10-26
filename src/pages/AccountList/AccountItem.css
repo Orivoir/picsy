@@ -15,6 +15,10 @@
     padding: 1vh 2vh;
     margin: 3vh 0;
 }
-/* .AccountItem:hover {
 
-} */
+.AccountItem aside ul {
+
+    display: flex;
+    flex-direction: column;
+
+}

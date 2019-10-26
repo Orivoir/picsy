@@ -1,12 +1,14 @@
 import React,{useState,useEffect} from 'react';
 import InputFile from './../InputFile/InputFile';
-import Notif from './../Notif/Notif';
+import Notif from './../Notif/Notif'; 
 import './FormAdd.css';
-import ReactTooltip from 'react-tooltip';
+// import ReactTooltip from 'react-tooltip';
 
-function FormAdd({type,onSubmit,load,className,voidForm}){
+const defaultPicture = "https://image0.flaticon.com/icons/png/128/189/189334.png";
 
-    const [picture,setPicture] = useState("https://image0.flaticon.com/icons/png/128/189/189334.png");
+function FormAdd({type,onSubmit,load,className,voidForm,onChange,imgsLength}){
+
+    const [picture,setPicture] = useState("");
     const [errors,setErrors] = useState([]);
     const [name,setName] = useState("");
     const [refName] = useState( React.createRef() );
@@ -28,7 +30,8 @@ function FormAdd({type,onSubmit,load,className,voidForm}){
 
                 const data = {
                     name: name
-                    ,picture: picture
+                    ,picture: picture || defaultPicture
+                    ,refName: refName
                     ,e: e
                 } ;
 
@@ -43,6 +46,7 @@ function FormAdd({type,onSubmit,load,className,voidForm}){
                 <input
                     ref={refName}
                     type="text"
+                    value={name}
                     placeholder={`nom de l'${!/album/i.test(type) ? 'image':'album' }`}
                     autoComplete="off"
                     onChange={({target}) => setName( target.value ) }
@@ -62,19 +66,10 @@ function FormAdd({type,onSubmit,load,className,voidForm}){
                     name="picture"
                     label={
                         <>
-                        <ReactTooltip
-                                id="add-picture"
+                            <Notif
+                                tooltip="add-picture"
                                 type="info"
-                                getContent={()=> (
-                                    <p style={{
-                                        fontSize: "16px"
-                                        ,margin: 0
-                                    }}>
-                                        <i className="fas fa-info-circle"></i>
-                                        &nbsp;ajouté une image
-                                    </p>
-                                )}    
-                                effect="solid"
+                                text="ajouté une image"
                                 place="top"
                             />
                             <figure
@@ -86,7 +81,7 @@ function FormAdd({type,onSubmit,load,className,voidForm}){
                                     onClick={e =>  e.target.parentNode.click()}
                                 >
                                     <img
-                                        src={picture}
+                                        src={defaultPicture}
                                         alt="ajouté"
                                         width={64}
                                     />
@@ -101,6 +96,12 @@ function FormAdd({type,onSubmit,load,className,voidForm}){
                             /image/i.test(file.type)
                         ) {
                             setPicture( blob );
+
+                            ( onChange => {
+                                setName( '' );
+                                onChange( file , blob , name , refName );
+                            } )( onChange instanceof Function ? onChange : () => {} ) ;
+
                         } else {
 
                             const mssg = file.size > 1e6 ? 
@@ -129,7 +130,7 @@ function FormAdd({type,onSubmit,load,className,voidForm}){
                 {
                     load || (
                         <span>
-                            ajouté l'{!/album/i.test(type) ? 'image' : 'album'}
+                            ajouté l{!/album/i.test(type) ? 'e.s image.s ' + imgsLength : '\'album'}
                         </span>
                     )
                 }

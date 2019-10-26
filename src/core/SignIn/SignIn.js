@@ -1,29 +1,21 @@
 import React from 'react';
 import './SignIn.css';
-import ReactToolTip from 'react-tooltip';
+import Notif from './../Notif/Notif';
 
 function SignIn() {
     return (
         <>
-          <ReactToolTip 
-                id="git-link"
+            <Notif
                 type="info"
-                getContent={()=> (
-                    <span style={{
-                        fontSize: "16px"
-                    }}>
-                        <i className="fas fa-info-circle"></i>
-                        &nbsp;dépot github
-                    </span>
-                )} 
-                effect="solid"
+                text="dépot github"
                 place="top"
+                tooltip="git-link"
             />
         
             <p className="sign-in">
-                Application front UI/UX développer <span>avec le CRA de Reactjs&nbsp;</span>
+                <span>Application front UI/UX</span>
+                &nbsp;développer <span>avec le CRA de Reactjs&nbsp;</span>
                 par
-                
                 &nbsp;<a data-for="git-link" data-tip="lien github" href="https://github.com/Orivoir/picsy">
                         <i className="fab fa-github"></i>
                         &nbsp;Samuel Gaborieau

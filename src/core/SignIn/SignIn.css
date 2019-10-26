@@ -54,3 +54,9 @@
         letter-spacing: .03rem;
     }
 }
+@media screen and (max-width:330px) , (max-height: 285px) {
+
+    .sign-in {
+        display: none;
+    }
+}

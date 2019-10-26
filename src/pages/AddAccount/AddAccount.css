@@ -6,3 +6,74 @@
     align-items: center;
     justify-content: center;
 }
+
+@media screen and (max-width: 530px) , ( max-height: 385px ) {
+    
+    .AddAccount h1 {
+        
+        position: absolute;
+        color: #fff;
+        display: block!important;
+        z-index: 10;
+        bottom: 3%;
+    }
+    
+    .AddAccount form {
+        
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@media screen and (max-width: 530px) , ( max-height: 435px ) {
+
+    .AddAccount h1 {
+        
+        position: absolute;
+        color: #fff;
+        display: block!important;
+        z-index: 10;
+        bottom: 3%;
+    }
+    
+    .AddAccount form {
+        
+        width: 100%;
+        height: 100%;
+    }
+}
+
+
+
+@media screen and (max-width: 330px) , ( max-height: 290px ) {
+    
+    .AddAccount h1 {
+        
+        font-size: 15px;
+        font-weight: 600;
+    }
+}
+
+@media screen and (max-width: 185px) , ( max-height: 200px ) {
+    
+    
+    .AddAccount h1 span.account-word {
+        display: inline-block!important;
+    }
+    .AddAccount h1 span.user-word {
+        
+        display: none;
+    }
+    .AddAccount h1 span.one-word {
+
+        display: none;
+    }
+
+    .AddAccount h1 {
+        
+        font-size: 12px;
+        font-weight: normal;
+        letter-spacing: 0;
+    }
+
+}

@@ -1,7 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import Loader from './../../core/Loader/Loader';
-import docCookies from 'doc-cookies';
-import ReactToolTip from 'react-tooltip';
+import docCookies from 'doc-cookies'; 
 import {Redirect} from 'react-router-dom';
 import './AccountItem.css';
 
@@ -11,6 +10,9 @@ function AccountItem({id,db}){
     const [user,setUser] = useState( null ) ;
     const [redirect,setRedirect] = useState( null ) ;
     const [showDetails,setShowDetails] = useState( false );
+    const [albums,setAlbums] = useState( false );
+    const [pictures,setPictures] = useState( [] ) ;
+    const [loaderAlbum,setLoaderAlbum] = useState( <Loader type="earth" width={32} bg="rgba(0,0,0,.9)" /> ) ;
 
     useEffect( () => {
 
@@ -21,6 +23,22 @@ function AccountItem({id,db}){
                 .then( u => {
                     setUser( u ) ;
                     setLoader( false ) ;
+
+                    db.getAlbumsOf( u.id )
+                        .then( albums => {
+                            setAlbums( albums );
+                            setLoaderAlbum( false );
+    
+                            albums.forEach(album => {
+
+                                db.getPictureOf( album.id )
+                                .then( pics => {
+                                    setPictures( [...pictures, ...pics] ) ;
+                                } ) ;
+                            });
+
+                        } )
+
                 } )
                 .catch( err => {
 
@@ -64,31 +82,26 @@ function AccountItem({id,db}){
                             <aside
                                 className={`${showDetails ? '': 'o-hide'}`}
                             >
-                            
-                                <i className="fas fa-running"></i>
-                                &nbsp;les données de détails de compte<br />
-                                en sueur
-                                
-                                <ReactToolTip 
-                                    id="pls"
-                                    type="error"
-                                    getContent={()=> (
-                                        <p style={{
-                                            fontSize: "16px"
-                                        }}>
-                                            <i className="fas fa-bug"></i>
-                                            &nbsp;Les requêtes réseaux en PLS
-                                        </p>
-                                    )}
-                                    effect="solid"
-                                    place="right"
-                                />
-                                &nbsp;<i data-for="pls" data-tip="en pls" className="fab fa-accessible-icon"></i>
-                                    
+                                                            
+                                {
+                                    loaderAlbum || (
+                                        <>
+                                            <ul>
+                                                <li>
+                                                    {albums.length} album{albums.length > 1 ? 's':''}
+                                                </li>
+                                                
+                                                <li>
+                                                    {pictures.length} image{pictures.length > 1 ? 's':''}
+                                                </li>
+                                            </ul>
+                                        </>
+                                    )
+                                }
+
                             </aside>
 
                         </button>
-
 
                     </section>
                 )

@@ -1,0 +1,46 @@
+.Previews {
+    margin: 3vh 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.Previews.error li {
+
+    background: rgba( 191 , 72 , 31 , .9 );
+}
+
+.Previews li button:hover {
+
+    transform: scale( 1.25 );
+}
+
+.Previews li button {
+
+
+    width: 65%;
+    margin: auto;
+    /* display: inline-block; */
+    color: #fff;
+    background: rgb(50,50,50);
+
+}
+.Previews li {
+
+    color: #fff;
+    border-radius: 5px;
+    background: rgb( 0,0,0,.93 );
+}
+
+.Previews li figure{
+
+    display: flex;
+    flex-direction: column;
+}
+
+.Previews li figure figcaption {
+
+    margin: 2.5vh 0;
+}
+
