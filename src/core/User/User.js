@@ -16,7 +16,7 @@ function User({
                     <>
                         <Title
                             title={<><strong>Picsy</strong> application</>}
-                            subtitle="version 0.2.1-beta"
+                            subtitle="version 0.2.2-beta"
                         />
                     
                         <div className="content-user">
