@@ -15,7 +15,8 @@ function ControlItem({
     errorsRname,
     onOpen,
     itemType,
-    closer
+    closer,
+    tipRemove
 }) {
 
     const [confirm,setConfirm] = useState(false);
@@ -37,10 +38,10 @@ function ControlItem({
     return (
         <ul
             className={`ControlItem`}
-            onMouseEnter={() => onOpen()}
+            onMouseEnter={() => onOpen instanceof Function ? onOpen(): null}
             onMouseLeave={() => {
-                if( !manualOpen ) {
-                    onClose()
+                if( !manualOpen && onClose instanceof Function) {
+                    onClose();
                 }
             }}
         >
@@ -53,7 +54,7 @@ function ControlItem({
                         <Notif
                             type="info"
                             place="top"
-                            tooltip="rname"
+                            tooltip={`rname-${Date.now()}`}
                             text={(
                                 <>
                                     renomé l'
@@ -77,14 +78,16 @@ function ControlItem({
                         onSubmit={e => {
                             e.preventDefault();
                             onRname( rname );
+                            setRname( '' );
                         }}
                     >
 
                         <input
                             ref={rnameRef}
-                            className={`input-rname rname ${!inputRname ? 'hide':'open'}`}
+                            className={`input-rname rname ${!inputRname ? 'hide':'open'} ${loadRname ? 'load-input': ''}`}
                             type="text"
                             name="rname"
+                            value={rname}
                             onChange={e => setRname( e.target.value )}
                             autoComplete="off"
                             placeholder={pic.get('name')}
@@ -103,7 +106,7 @@ function ControlItem({
                             loader={loadRname}
                             className="fas fa-times"
                             onClick={() => setInputRname(false)}
-                            classHandle={`rname-btn ${inputRname ? '':'hide'}`}
+                            classHandle={`rname-btn ${inputRname ? '':'hide'} ${loadRname ? 'load-btn disabled': ''}`}
                         />
 
                         {
@@ -130,8 +133,14 @@ function ControlItem({
                                         tooltip="remove"
                                         text={(
                                             <>
-                                                supprimé l'
-                                                {itemType !== 'album' ? 'image': 'album'}
+                                                {
+                                                    tipRemove || (
+                                                        <>
+                                                            supprimé l'
+                                                            {itemType !== 'album' ? 'image': 'album'}
+                                                        </>
+                                                    )
+                                                }
                                             </>
                                         )}
                                     />

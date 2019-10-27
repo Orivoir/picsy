@@ -48,10 +48,11 @@ export default class Dash extends React.Component {
 
                         this.props.db.getAlbumsOf( user.id ).then( docs => {
 
-                            this.setState( state => ({
-                                loader : { u: state.loader.u, albums: false  },
+
+                            this.setState( {
+                                loader : { albums: false  },
                                 albums: docs
-                            }))
+                            })
                         } )
 
                     }  ) ;

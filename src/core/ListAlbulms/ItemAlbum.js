@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {HashLink as Link} from 'react-router-hash-link';
 import ControlItem from './../ControlItem/ControlItem';
 import Loader from './../Loader/Loader';
@@ -10,11 +10,18 @@ const
     btnLinkRef = React.createRef()
 ;
 
+function getSizeOf( albumID , db ) {
+
+    return new Promise( ( resolve , reject ) => {
+        db.getPictureOf( albumID ).then( docs => resolve( docs.length )  )  ;
+    } ) ;
+
+}
+
 function ItemAlbum({
     item,
     db
 }) {
-
 
     const [control,setControl] = useState( false );
     const [loadRname,setLoadRname] = useState( false );
@@ -24,6 +31,13 @@ function ItemAlbum({
     const [redirect,setRedirect] = useState( false );
     const [errors,setErrors] = useState( [] );
     const [refItem] = useState(React.createRef());
+    const [size,setSize] = useState( null ) ;
+
+    useEffect( () => {
+        
+        if( size === null )
+            getSizeOf( item.id , db ).then( l => setSize( l || 0 ) )
+    } )
 
     return (
         <>
@@ -36,7 +50,11 @@ function ItemAlbum({
                 ref={refItem}
             >
                 <div className="number-item">
-                    {item.get('size')} images
+                    {(
+                        size === null ?
+                            <Loader width={32} type="az" />
+                            : size
+                    )} images
                 </div>
                 <button
                     className="album-btn"
@@ -67,6 +85,7 @@ function ItemAlbum({
 
                     <aside>      
                         <ControlItem
+                            tipRemove="abc"
                             itemType="album"
                             onRemove={() => {
                                 db.removeAlbum( item.id ).then( () => {

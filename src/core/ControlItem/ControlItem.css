@@ -14,7 +14,6 @@
     height: 100%;
 }
 
-
 .ControlItem li input:focus {
 
     border-color: #fff ;
@@ -70,6 +69,10 @@
 
 }
 
+.ControlItem li form {
+    display: flex;
+}
+
 .ControlItem li form button.rname-btn {
 
     min-height: 33px;
@@ -81,6 +84,12 @@
     background: #fff;
     color: #000;
     opacity: 1;
+}
+
+.ControlItem .load-input {
+
+    opacity: .15;
+    border-radius: 0; 
 }
 
 .ControlItem .input-rname {

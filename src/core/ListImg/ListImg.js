@@ -19,7 +19,7 @@ function ListImg( {
                             key={item.id}
                             item={item}
                             db={db}
-                            even={!!(key%2)}
+                            // even={!!(key%2)}
                         />
                     ) )
                 )

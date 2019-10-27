@@ -43,7 +43,8 @@ function Notif( {
                             type={(
                                 type === 'infos' ? 
                                 'info' : type === 'bug' ?
-                                'error' : type
+                                'error' : type === 'warn' ? 
+                                'warning' : type
                             )}
                             getContent={() => (
                                 <span style={{

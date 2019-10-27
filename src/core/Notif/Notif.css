@@ -65,6 +65,10 @@
 
     background: rgb(219, 166, 20);
 }
+.Notif.warn , .Notif.warning  {
+
+    background: rgb(221, 210, 59);
+}
 .Notif.back {
 
     background: rgb(55, 55, 55);

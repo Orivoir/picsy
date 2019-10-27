@@ -1,9 +1,8 @@
 import React from 'react';
-import Icons from './../Icons/Icons';
-import Notif from './../Notif/Notif';
 import './Previews.css';
+import PreviewItem from './PreviewItem';
 
-function Previews({items,error,onRemove}) {
+function Previews({items,error,onRemove,onRname}) {
 
     return (
         <ul
@@ -11,34 +10,12 @@ function Previews({items,error,onRemove}) {
         >
             {
                 items.map( (item,key) => (
-                    <li
+                    <PreviewItem
+                        onRname={(currentName,rname) => onRname(currentName, rname)}
                         key={key}
-                    >
-                        <figure>
-                            <img
-                                src={item.blob}
-                                alt="pré vue d'ajout"
-                                width={128}
-                            />
-                            <figcaption>
-                                {item.name}
-                            </figcaption>
-
-                            <Icons
-                                tooltip={(
-                                    <Notif
-                                        type="info"
-                                        tooltip={`close-preview-${key}`}
-                                        place="left"
-                                        text="supprimé de l'ajout"
-                                    />
-                                )}
-                                onClick={() => onRemove( item )}
-                                className="fas fa-times"
-                            />
-
-                        </figure>
-                    </li>
+                        item={item}
+                        onRemove={onRemove}
+                    />
                 ) )
             }
         </ul>

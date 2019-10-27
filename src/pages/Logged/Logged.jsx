@@ -130,22 +130,6 @@ export default class Logged extends React.Component {
             this.setState( {
                 redirect: <Redirect to="/account-list" />
             } ) ;
-            console.log('SHOW ACCOUNT LIST');
-            
-            // this.props.db.getUser(this.userID)
-            // .then( user => {
-
-            //     if( user ) {
-            //         this.setState( {
-            //             redirect: <Redirect to="/dash" />
-            //         } ) ;
-                    
-            //     } else {
-            //         this.setState( {
-            //             loader: false
-            //         } ) ;
-            //     }
-            // } ) ;
             
         }
     }

@@ -123,9 +123,17 @@ function FormAdd({type,onSubmit,load,className,voidForm,onChange,imgsLength}){
                 : null
             }
 
+            <Notif
+                tooltip="disabled"
+                type="warn"
+                text="chargement ..."
+            />
             <button
                 type='submit'
                 disabled={!!load}
+                className={!!load ? 'disabled':''}
+                data-for={!!load ? 'disabled':''}
+                data-tip="chargement ..."
             >
                 {
                     load || (

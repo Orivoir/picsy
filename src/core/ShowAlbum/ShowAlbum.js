@@ -26,8 +26,6 @@ function ShowAlbum({db,loaderAlbum,album}) {
     const [loaderAddPicture,setLoaderAddPicture] = useState( false );
     const [errors,setErrors] = useState([]);
     const [successFor,setSuccessFor] = useState([]);
-    const [voidForm,setVoidForm] = useState( false );
-    const [sendPreview,setSendPreview] = useState( false );
     const [previews,setPreviews] = useState( [] );
     const [pictures,setPictures] = useState({
         pics:false
@@ -63,92 +61,103 @@ function ShowAlbum({db,loaderAlbum,album}) {
 
             <FormAdd
                 type="picture"
-                voidForm={voidForm}
-                onSubmit={({name,picture}) => {
+                // voidForm={voidForm}
+                onSubmit={() => {
                     
-                    if(
+                    if( loaderAddPicture ) return ;
+
+                    if( // if: user have send file.s
                         previews.length
                     ) {
                         setLoaderAddPicture( <Loader type="btn" width={16} />);
 
-                        let tempPreviews = previews ;
-                        let finish = 0;
-                        let total = tempPreviews.length;
+                        Promise.all( // resolve promise.s add picture.s
+                            Array.from(
+                                Array( previews.filter( preview => (
+                                    preview.name.length >= 2 &&
+                                    preview.name.length < 42
+                                ) ).length ).keys()
+                            ).map( key => db.addPicture(
+                                id, previews[key].name, previews[key].blob
+                            ) )
+                        ).then( responses => {
 
-                        previews.forEach( preview => {
+                            let
+                             finalSucessFor = [],
+                             finalPreviews = previews,
+                             finalErrors = errors
+                            ;
 
-                            if(!(
-                                preview.name.length <= 42 &&
-                                preview.name.length >= 2
-                            )) {
-                                return setErrors( [ ...errors , <Notif
-                                    key={Date.now()}
-                                    text="taille de nom invalide"
-                                    type="error"
-                                    onClose={({remove}) => remove()}
-                                /> ] ) ;
-                            } 
-
-                            // else add picture
-                            db.addPicture(id,preview.name, preview.blob)
-                            .then( response => {
-
-                                finish++;
-                                setLoaderAddPicture(false);
-
+                            responses.forEach( response => {
+                                
                                 if( response.success ) {
-                                    
-                                    tempPreviews = tempPreviews.filter( p => p.name !== response.name ) ;
 
-                                    if( finish >= total ) {
+                                    finalPreviews = finalPreviews.filter( p => (
+                                        p.name !== response.name
+                                    ) ) ;
 
-                                        setSuccessFor( 
-                                            Array.from( 
-                                                Array( total - tempPreviews.length ).keys()
-                                            ).map( key => previews[key].name )
-                                        ) ;
+                                    finalSucessFor.push( response.name ) ;
 
-                                        setPreviews( tempPreviews );
-                                        setSendPreview( true );
-
-                                        setTimeout(() => {
-                                            setSendPreview( false );
-                                            setPreviews( [] );
-                                        }, 5e3);
-                                            
-                                        setVoidForm( true );
-                                        setTimeout(() => {
-                                            setVoidForm( false );
-                                        }, 100);
-                                        setPictures({
-                                            pics:null
-                                            ,loader:<Loader
-                                                width={64}
-                                                bg="rgba(0,0,0,.9)"
-                                                type="timer"
-                                            />
-                                        }) ;
-                                    }
                                 } else {
-                                    setErrors( [ ...errors , <Notif
-                                        key={Date.now()}
-                                        text="nom déjà existant"
-                                        type="error"
-                                        onClose={({remove}) => remove()}
-                                    /> ] ) ;
+                                    
+                                    if( response.status === 401 ) {
+                                        // Bad request
+
+                                        // rname here
+                                        finalErrors.push( <Notif
+                                            key={Date.now()}
+                                            text={`${response.name} existe déjà `}
+                                            type="error"
+                                            onClose={({remove}) => remove()}
+                                        /> ) ;
+                                    } else {
+
+                                        finalErrors.push( <Notif
+                                            key={Date.now()}
+                                            text={`une erreur de réseaux et survenue , check README.md ERROR_CODE[10b2] branch => v0.2.2-beta`}
+                                            type="error"
+                                            onClose={({remove}) => remove()}
+                                        /> ) ;
+
+                                        console.error('unknow error in add image response : ', response )
+                                    }
                                 }
 
                             } ) ;
+                            
+                            // notif success pictures add
+                            setSuccessFor( finalSucessFor || [] );
+                            
+                            // notif errors pictures add
+                            setErrors( finalErrors ) ;
+                            
+                            // contains pictures errors 
+                            setPreviews( finalPreviews) ;
+                            
+                            // off loader submit form
+                            setLoaderAddPicture( false ) ;
 
+                            // force reload all pictures to next render
+                            setPictures( {
+                                pics:false,
+                                loader:<Loader
+                                    width={64}
+                                    bg="rgba(0,0,0,.9)"
+                                    type="timer"
+                                /> 
+                            } ) ;
+
+                        } )
+                        .catch( err => {
+                            setLoaderAddPicture( false ) ;
+                            console.error( err ) ;
                         } ) ;
                     }
-                    else {
-
-                        const mssg = "vous n'avez pas envoyé de fichier"
+                    else { // not file.s send
 
                         setErrors( [ ...errors , <Notif
                             key={Date.now()}
-                            text={mssg}
+                            text="vous n'avez pas envoyé de fichier"
                             type="error"
                             onClose={({remove}) => remove()}
                         /> ] ) ;
@@ -200,11 +209,42 @@ function ShowAlbum({db,loaderAlbum,album}) {
                 (
                     previews.length ? (
                         <Previews
+                            onRname={(currentName,rname) => {
+                                
+                                if( previews.find( preview => preview.name === rname ) ) {
+                                    // here re name value already exists
+
+                                    // notif error
+
+                                    setErrors( [...errors , <Notif
+                                        key={Date.now().toString() + Math.random().toString()}
+                                        type="error"
+                                        onClose={({remove,hide}) => !remove() ? hide(): null}
+                                        text="ce nom d'image existe déjà"
+                                    />] ) ;
+
+
+                                } else {
+
+                                    
+                                    setErrors( [...errors , <Notif
+                                        key={Date.now().toString() + Math.random().toString()}
+                                        type="success" // lol
+                                        onClose={({remove,hide}) => !remove() ? hide(): null}
+                                        text={`l'image ${currentName} à été re nomé en ${rname}`}
+                                    />] ) ;
+
+                                    setPreviews( previews.map( preview => {
+                                        if(preview.name === currentName)
+                                        preview.name = rname ;
+                                        return preview;
+                                    } ) ) ;
+                                }
+                            }}
                             onRemove={preview => (
                                 setPreviews( previews.filter( p => p.name !== preview.name ) )
                             )}
                             items={previews}
-                            error={!!sendPreview}
                         />
                     ) : null
                 )
@@ -215,6 +255,7 @@ function ShowAlbum({db,loaderAlbum,album}) {
                     successFor.length ? (
                         <ul>
                             {
+                                successFor instanceof Array ? 
                                 successFor.map( (name,key) => (
                                     <li key={key}>
                                         <Notif
@@ -223,7 +264,7 @@ function ShowAlbum({db,loaderAlbum,album}) {
                                             text={`L'image ${name} à été ajouté avec succés`}
                                         />
                                     </li>
-                                ) )
+                                ) ) : null
                             }
                         </ul>
                     ) : null
