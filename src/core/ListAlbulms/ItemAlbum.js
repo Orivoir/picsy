@@ -37,48 +37,48 @@ function ItemAlbum({
         
         if( size === null )
             getSizeOf( item.id , db ).then( l => setSize( l || 0 ) )
-    } )
+    } ) ;
 
     return (
         <>
             {redirect}
             { visible && (
                 <li
-                onMouseEnter={() => setControl(true)}
-                onMouseLeave={() => setControl(false)}
-                className={`AlbumItem ${visible ? '':'hide'}`}
-                ref={refItem}
-            >
-                <div className="number-item">
-                    {(
-                        size === null ?
-                            <Loader width={32} type="az" />
-                            : size
-                    )} images
-                </div>
-                <button
-                    className="album-btn"
-                    ref={btnLinkRef}
-                    onKeyDown={e => {
-                        if( /menu/i.test(e.key) )
-                            setControl( true );
-                            setManualControl( true );
-                    } }
-                    onClick={() => setRedirect( <Redirect to={`album/${item.id}`} /> )}
-                    onContextMenu={e => e.preventDefault()}
+                    onMouseEnter={() => setControl(true)}
+                    onMouseLeave={() => setControl(false)}
+                    className={`AlbumItem ${visible ? '':'hide'}`}
+                    ref={refItem}
                 >
-                    <Link
-                        onPointerUp={e => {
-                            if(e.nativeEvent.which === 3 ) {
-
-                                setControl(true);
-                                setManualControl( true );
-                            }
-                        }}
-                        to={`album/${item.id}`}
+                    <div className="number-item">
+                        {(
+                            size === null ?
+                                <Loader width={32} type="az" />
+                                : size
+                        )} images
+                    </div>
+                    <button
+                        className="album-btn"
+                        ref={btnLinkRef}
+                        onKeyDown={e => {
+                            if( /menu/i.test(e.key) )
+                                setControl( !control );
+                                setManualControl( !control );
+                        } }
+                        onClick={() => setRedirect( <Redirect to={`album/${item.id}`} /> )}
+                        onContextMenu={e => e.preventDefault()}
                     >
-                        {name}
-                    </Link>
+                        <Link
+                            onPointerUp={e => {
+                                if(e.nativeEvent.which === 3 ) {
+
+                                    setControl(true);
+                                    setManualControl( true );
+                                }
+                            }}
+                            to={`album/${item.id}`}
+                        >
+                            {name}
+                        </Link>
                 </button>
 
                 <section>
@@ -128,7 +128,7 @@ function ItemAlbum({
                     </aside>
                 </section>
             </li>
-            ) }
+        ) }
         </>
     ) ;
 }

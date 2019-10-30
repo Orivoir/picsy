@@ -1,5 +1,6 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {HashLink as Link} from 'react-router-hash-link';
+import {Redirect} from 'react-router-dom';
 
 function Icons({
     tooltip,
@@ -7,8 +8,14 @@ function Icons({
     target,
     onClick,
     classHandle,
-    loader
+    loader,
+    textAlt,
+    text,
+    alt
 }) {
+
+    const [focus , setFocus] = useState( false ) ; 
+    const [redirect , setRedirect] = useState( false ) ; 
 
     return (
         <>
@@ -19,14 +26,37 @@ function Icons({
                 data-tip={tooltip.props.text}
             >
 
+            {redirect}
+
             {
                 target ? (
-                    <Link 
+                    <Link
+                        style={{
+                            transition: '.11s linear all'
+                        }}
+                        onFocus={() => {
+                            setFocus(true);
+                        }}
+                        onBlur={() => {
+                            setFocus(false);
+                        }}
                         to={target} 
-                        onClick={onClick instanceof Function ? onClick : () => {}}
-                        className={classHandle}
+                        onPointerDown={onClick instanceof Function ? onClick : () => {
+                            setRedirect( <Redirect to={target} /> );
+
+                        }}
+                        className={`${classHandle} ${focus ? 'access-focus' : ''}`}
                     >
-                        <i className={className}></i>
+                        {
+                            loader || (
+                                (
+                                    focus ?
+                                        textAlt || text || alt || 'here'
+                                    :
+                                    <i className={className}></i>
+                                )
+                            )
+                        }
                     </Link>
                 ) : (
                     <button
@@ -36,7 +66,12 @@ function Icons({
                     >
                         {
                             loader || (
-                                <i className={className}></i>
+                                (
+                                    focus ?
+                                        textAlt || text || alt || 'here'
+                                    :
+                                    <i className={className}></i>
+                                )
                             )
                         }
                     </button>
@@ -44,6 +79,7 @@ function Icons({
             }
 
             </span>
+
         </>
     ) ;
 }

@@ -6,7 +6,7 @@ import './FormAdd.css';
 
 const defaultPicture = "https://image0.flaticon.com/icons/png/128/189/189334.png";
 
-function FormAdd({type,onSubmit,load,className,voidForm,onChange,imgsLength}){
+function FormAdd({type,onSubmit,load,className,onChange,imgsLength,autoFocus}){
 
     const [picture,setPicture] = useState("");
     const [errors,setErrors] = useState([]);
@@ -15,8 +15,12 @@ function FormAdd({type,onSubmit,load,className,voidForm,onChange,imgsLength}){
 
     useEffect( () => {
 
-        if( voidForm ) {
-            refName.current.value = "";
+        if( refName.current instanceof Node ) {
+            // here physical DOM is ok
+            
+            if( autoFocus ) {
+                refName.current.focus();
+            }
         }
 
     } ) ;
@@ -34,6 +38,8 @@ function FormAdd({type,onSubmit,load,className,voidForm,onChange,imgsLength}){
                     ,refName: refName
                     ,e: e
                 } ;
+
+                setName('') ;
 
                 if( /album/i.test(type) )
                     delete data.picture;
@@ -138,7 +144,7 @@ function FormAdd({type,onSubmit,load,className,voidForm,onChange,imgsLength}){
                 {
                     load || (
                         <span>
-                            ajouté l{!/album/i.test(type) ? 'e.s image.s ' + imgsLength : '\'album'}
+                            ajouté {!/album/i.test(type) ? (imgsLength+' images') : '\'album'}
                         </span>
                     )
                 }

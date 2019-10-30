@@ -1,0 +1,37 @@
+.Slide.active {
+    display: flex;
+    justify-content: center;
+}
+
+.Slide {
+    
+    transition: .32s linear all;
+}
+
+@keyframes slidePrev {
+    
+    from {
+        transform:  translateX(0%) scale( 1 );
+    } to {
+        transform:  translateX(-150%) scale( 0 );
+    }
+}
+
+@keyframes slideNext {
+
+    from {
+        transform:  translateX(0%) scale( 1 );
+    } to {
+        transform:  translateX(150%) scale( 0 );
+    }
+}
+
+.Slide.active.next {
+
+    animation: slideNext 0.5s linear;
+}
+
+.Slide.active.prev {
+
+    animation: slidePrev 0.5s linear;
+}

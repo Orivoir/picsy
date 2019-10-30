@@ -34,6 +34,7 @@ function User({
                             {
                                 icons.map( icon => (
                                     <Icons
+                                        alt={icon.alt}
                                         key={icon.id}
                                         tooltip={icon.tooltip}
                                         target={icon.target}

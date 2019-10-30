@@ -178,8 +178,9 @@ const
               ,name: name
               ,createAt: Date.now()
               ,size: 0
-            } ).then( () => resolve({
-              success:true
+            } ).then( data => resolve({
+              success:true,
+              album: data
             }) )
             .catch( err => reject( err ) ) ;
 
@@ -452,7 +453,6 @@ const
 
               } )
               .catch( err => reject( err ) )
-            ;
           } ).catch( err => reject( err ) )
       } )
     }

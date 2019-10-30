@@ -1,0 +1,62 @@
+.Slider {
+    width: 100%;
+    background: rgba( 0,0,0,.85 );
+    overflow: hidden;
+    height: 100%;
+    color: #fff;
+}
+
+.Slider .react-sweet-progress-symbol {
+    
+    color: #fff!important;
+    padding: 0 1.2vh;
+}
+
+.Slider .content-slider {
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.Slider .content-slider button {
+
+    border: none;
+    color: #fff;
+    font-size: 25px;
+}
+
+.Slider .content-slider button:hover {
+
+    background: rgba(225, 102, 181,.42);
+}
+
+.Slider .points-item {
+
+    margin: 1vh 0;
+    height: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.Slider .points-item .points:hover {
+
+    opacity: 1;
+}
+
+.Slider .points-item .points {
+    
+    transition: .2s linear all;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin: 0 1.2vh;
+    background: #fff;
+    opacity: .42;
+    cursor: pointer;
+}
+
+.Slider .points-item .points.active {
+
+    opacity: 1;
+}
