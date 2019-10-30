@@ -1,19 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "937baacc4116d420ba65a037da4e4dcc",
+    "revision": "72f52756c86f6f55534bb167a4785369",
     "url": "/picsy/index.html"
   },
   {
-    "revision": "4dc347ebf6e2ee78cbbc",
-    "url": "/picsy/static/css/main.a8864248.chunk.css"
+    "revision": "514c87113537bc29e44c",
+    "url": "/picsy/static/css/2.533d620f.chunk.css"
   },
   {
-    "revision": "c00cd9bc55ba48d9151a",
-    "url": "/picsy/static/js/2.0d41f186.chunk.js"
+    "revision": "84e0d5f53ebeb830d2c4",
+    "url": "/picsy/static/css/main.d4ca50f6.chunk.css"
   },
   {
-    "revision": "4dc347ebf6e2ee78cbbc",
-    "url": "/picsy/static/js/main.9c5076a6.chunk.js"
+    "revision": "514c87113537bc29e44c",
+    "url": "/picsy/static/js/2.9d121a59.chunk.js"
+  },
+  {
+    "revision": "84e0d5f53ebeb830d2c4",
+    "url": "/picsy/static/js/main.bae6d6f0.chunk.js"
   },
   {
     "revision": "5ae2d8438d885d38ffa4",
